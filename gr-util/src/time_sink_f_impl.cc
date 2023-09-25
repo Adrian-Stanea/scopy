@@ -87,11 +87,20 @@ time_sink_f_impl::time_sink_f_impl(int size, float sampleRate, const std::string
 	m_tags = std::vector<std::vector<gr::tag_t>>(m_nconnections);
 }
 
-time_sink_f_impl::~time_sink_f_impl() { qInfo(CAT_TIME_SINK_F) << "dtor"; }
+time_sink_f_impl::~time_sink_f_impl()
+{
+	qInfo(CAT_TIME_SINK_F) << "dtor";
+}
 
-bool time_sink_f_impl::check_topology(int ninputs, int noutputs) { return ninputs == m_nconnections; }
+bool time_sink_f_impl::check_topology(int ninputs, int noutputs)
+{
+	return ninputs == m_nconnections;
+}
 
-std::string time_sink_f_impl::name() const { return m_name; }
+std::string time_sink_f_impl::name() const
+{
+	return m_name;
+}
 
 void time_sink_f_impl::updateData()
 {
@@ -118,21 +127,45 @@ void time_sink_f_impl::updateData()
 	}
 }
 
-bool time_sink_f_impl::rollingMode() { return m_rollingMode; }
+bool time_sink_f_impl::rollingMode()
+{
+	return m_rollingMode;
+}
 
-void time_sink_f_impl::setRollingMode(bool b) { m_rollingMode = b; }
+void time_sink_f_impl::setRollingMode(bool b)
+{
+	m_rollingMode = b;
+}
 
-bool time_sink_f_impl::singleShot() { return m_singleShot; }
+bool time_sink_f_impl::singleShot()
+{
+	return m_singleShot;
+}
 
-void time_sink_f_impl::setSingleShot(bool b) { m_singleShot = b; }
+void time_sink_f_impl::setSingleShot(bool b)
+{
+	m_singleShot = b;
+}
 
-bool time_sink_f_impl::finishedAcquisition() { return m_workFinished && m_dataUpdated; }
+bool time_sink_f_impl::finishedAcquisition()
+{
+	return m_workFinished && m_dataUpdated;
+}
 
-const std::vector<float> &time_sink_f_impl::time() const { return m_time; }
+const std::vector<float> &time_sink_f_impl::time() const
+{
+	return m_time;
+}
 
-const std::vector<std::vector<float>> &time_sink_f_impl::data() const { return m_data; }
+const std::vector<std::vector<float>> &time_sink_f_impl::data() const
+{
+	return m_data;
+}
 
-const std::vector<std::vector<PlotTag_t>> &time_sink_f_impl::tags() const { return m_dataTags; }
+const std::vector<std::vector<PlotTag_t>> &time_sink_f_impl::tags() const
+{
+	return m_dataTags;
+}
 
 bool time_sink_f_impl::start()
 {
@@ -141,7 +174,10 @@ bool time_sink_f_impl::start()
 	return true;
 }
 
-bool time_sink_f_impl::stop() { return true; }
+bool time_sink_f_impl::stop()
+{
+	return true;
+}
 
 int time_sink_f_impl::work(int noutput_items, gr_vector_const_void_star &input_items, gr_vector_void_star &output_items)
 {

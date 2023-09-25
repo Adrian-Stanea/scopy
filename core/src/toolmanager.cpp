@@ -22,7 +22,10 @@ ToolManager::ToolManager(ToolMenu *tm, ToolStack *ts, DetachedToolWindowManager 
 	qDebug(CAT_TOOLMANAGER) << "ctor";
 }
 
-ToolManager::~ToolManager() { qDebug(CAT_TOOLMANAGER) << "dtor"; }
+ToolManager::~ToolManager()
+{
+	qDebug(CAT_TOOLMANAGER) << "dtor";
+}
 
 void ToolManager::addToolList(QString s, QList<ToolMenuEntry *> sl)
 {
@@ -136,7 +139,6 @@ void ToolManager::updateToolEntry()
 
 void ToolManager::updateTool(QWidget *old)
 {
-
 	ToolMenuEntry *tme = dynamic_cast<ToolMenuEntry *>(QObject::sender());
 	Q_ASSERT(tme);
 	QString id = tme->uuid();

@@ -57,9 +57,15 @@ void VersionCache::init()
 	read();
 }
 
-QJsonDocument VersionCache::cache() { return m_cache; }
+QJsonDocument VersionCache::cache()
+{
+	return m_cache;
+}
 
-bool VersionCache::cacheOutdated() const { return m_cacheOutdated; }
+bool VersionCache::cacheOutdated() const
+{
+	return m_cacheOutdated;
+}
 
 void VersionCache::updateCache()
 {

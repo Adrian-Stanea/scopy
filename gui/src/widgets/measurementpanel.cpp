@@ -80,7 +80,10 @@ void MeasurementsPanel::removeMeasurement(QWidget *meas)
 	update();
 }
 
-void MeasurementsPanel::sort() { update(); }
+void MeasurementsPanel::sort()
+{
+	update();
+}
 
 void MeasurementsPanel::update()
 {
@@ -100,7 +103,10 @@ void MeasurementsPanel::update()
 	}
 }
 
-QWidget *MeasurementsPanel::cursorArea() { return m_cursor; }
+QWidget *MeasurementsPanel::cursorArea()
+{
+	return m_cursor;
+}
 
 StatsPanel::StatsPanel(QWidget *parent)
 {

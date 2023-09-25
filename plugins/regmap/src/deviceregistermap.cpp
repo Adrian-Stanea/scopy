@@ -153,7 +153,10 @@ void DeviceRegisterMap::registerChanged(RegisterModel *regModel)
 	});
 }
 
-void DeviceRegisterMap::toggleAutoread(bool toggled) { autoread = toggled; }
+void DeviceRegisterMap::toggleAutoread(bool toggled)
+{
+	autoread = toggled;
+}
 
 void DeviceRegisterMap::applyFilters(QString filter)
 {

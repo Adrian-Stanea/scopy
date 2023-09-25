@@ -47,11 +47,20 @@ void PlotLineHandle::moveSilently(QPoint pos)
 	moveWithinParent(pos.x(), pos.y());
 }
 
-int PlotLineHandle::position() { return m_current_pos; }
+int PlotLineHandle::position()
+{
+	return m_current_pos;
+}
 
-void PlotLineHandle::setPen(const QPen &pen) { m_pen = pen; }
+void PlotLineHandle::setPen(const QPen &pen)
+{
+	m_pen = pen;
+}
 
-const QPen &PlotLineHandle::pen() { return m_pen; }
+const QPen &PlotLineHandle::pen()
+{
+	return m_pen;
+}
 
 void PlotLineHandle::enterEvent(QEvent *event)
 {
@@ -96,7 +105,10 @@ PlotGateHandle::PlotGateHandle(const QPixmap &handleIcon, QWidget *parent)
 	setMaximumSize(m_width, m_height);
 }
 
-void PlotGateHandle::triggerMove() { Q_EMIT positionChanged(m_current_pos); }
+void PlotGateHandle::triggerMove()
+{
+	Q_EMIT positionChanged(m_current_pos);
+}
 
 void PlotGateHandle::setPosition(int pos)
 {
@@ -110,7 +122,10 @@ void PlotGateHandle::setPositionSilenty(int pos)
 		moveSilently(QPoint(centerPosToOrigin(pos), 0));
 }
 
-void PlotGateHandle::updatePosition() { moveSilently(QPoint(0, centerPosToOrigin(m_current_pos))); }
+void PlotGateHandle::updatePosition()
+{
+	moveSilently(QPoint(0, centerPosToOrigin(m_current_pos)));
+}
 
 void PlotGateHandle::moveWithinParent(int x, int y)
 {
@@ -173,7 +188,10 @@ void PlotGateHandle::moveWithinParent(int x, int y)
 	m_enable_silent_move = false;
 }
 
-void PlotGateHandle::setInnerSpacing(int value) { m_innerSpacing = value; }
+void PlotGateHandle::setInnerSpacing(int value)
+{
+	m_innerSpacing = value;
+}
 
 int PlotGateHandle::position()
 {
@@ -193,7 +211,10 @@ void PlotGateHandle::setCenterLeft(bool val)
 	m_alignLeft = val;
 }
 
-int PlotGateHandle::getCurrentPos() { return m_position; }
+int PlotGateHandle::getCurrentPos()
+{
+	return m_position;
+}
 
 bool PlotGateHandle::reachedLimit()
 {
@@ -250,7 +271,10 @@ PlotLineHandleH::PlotLineHandleH(const QPixmap &handleIcon, QWidget *parent, boo
 	setMaximumSize(m_width, m_height);
 }
 
-void PlotLineHandleH::triggerMove() { Q_EMIT positionChanged(m_current_pos); }
+void PlotLineHandleH::triggerMove()
+{
+	Q_EMIT positionChanged(m_current_pos);
+}
 
 void PlotLineHandleH::setPosition(int pos)
 {
@@ -264,9 +288,15 @@ void PlotLineHandleH::setPositionSilenty(int pos)
 		moveSilently(QPoint(centerPosToOrigin(pos), 0));
 }
 
-void PlotLineHandleH::updatePosition() { moveSilently(QPoint(centerPosToOrigin(m_current_pos), 0)); }
+void PlotLineHandleH::updatePosition()
+{
+	moveSilently(QPoint(centerPosToOrigin(m_current_pos), 0));
+}
 
-void PlotLineHandleH::setInnerSpacing(int value) { m_innerSpacing = value; }
+void PlotLineHandleH::setInnerSpacing(int value)
+{
+	m_innerSpacing = value;
+}
 
 void PlotLineHandleH::moveWithinParent(int x, int y)
 {
@@ -351,7 +381,10 @@ PlotLineHandleV::PlotLineHandleV(const QPixmap &handleIcon, QWidget *parent, boo
 	setMaximumSize(m_width, m_height);
 }
 
-void PlotLineHandleV::triggerMove() { Q_EMIT positionChanged(m_current_pos); }
+void PlotLineHandleV::triggerMove()
+{
+	Q_EMIT positionChanged(m_current_pos);
+}
 
 void PlotLineHandleV::setPosition(int pos)
 {
@@ -365,7 +398,10 @@ void PlotLineHandleV::setPositionSilenty(int pos)
 		moveSilently(QPoint(0, centerPosToOrigin(pos)));
 }
 
-void PlotLineHandleV::updatePosition() { moveSilently(QPoint(0, centerPosToOrigin(m_current_pos))); }
+void PlotLineHandleV::updatePosition()
+{
+	moveSilently(QPoint(0, centerPosToOrigin(m_current_pos)));
+}
 
 void PlotLineHandleV::moveWithinParent(int x, int y)
 {
@@ -560,7 +596,10 @@ void FreePlotLineHandleV::setName(const QString &name)
 	}
 }
 
-QString FreePlotLineHandleV::getName() const { return m_name; }
+QString FreePlotLineHandleV::getName() const
+{
+	return m_name;
+}
 
 void FreePlotLineHandleV::paintEvent(QPaintEvent *)
 {
@@ -632,7 +671,10 @@ RoundedHandleV::RoundedHandleV(const QPixmap &handleIcon, const QPixmap &beyondT
 	m_selectable = selectable;
 }
 
-QColor RoundedHandleV::roundRectColor() { return m_roundRectColor; }
+QColor RoundedHandleV::roundRectColor()
+{
+	return m_roundRectColor;
+}
 
 void RoundedHandleV::setRoundRectColor(const QColor &newColor)
 {
@@ -650,7 +692,10 @@ void RoundedHandleV::setSelected(bool selected)
 	}
 }
 
-bool RoundedHandleV::isSelected() const { return m_selected; }
+bool RoundedHandleV::isSelected() const
+{
+	return m_selected;
+}
 
 void RoundedHandleV::setSelectable(bool selectable)
 {

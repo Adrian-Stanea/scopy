@@ -92,11 +92,20 @@ void PlotAxis::setupAxisScale()
 	scaleItem->setZ(200);
 }
 
-int PlotAxis::position() { return m_position; }
+int PlotAxis::position()
+{
+	return m_position;
+}
 
-bool PlotAxis::isHorizontal() { return (m_position == QwtAxis::XBottom || m_position == QwtAxis::XTop); }
+bool PlotAxis::isHorizontal()
+{
+	return (m_position == QwtAxis::XBottom || m_position == QwtAxis::XTop);
+}
 
-bool PlotAxis::isVertical() { return (m_position == QwtAxis::YLeft || m_position == QwtAxis::YRight); }
+bool PlotAxis::isVertical()
+{
+	return (m_position == QwtAxis::YLeft || m_position == QwtAxis::YRight);
+}
 
 void PlotAxis::setDivs(double divs)
 {
@@ -111,7 +120,10 @@ void PlotAxis::setInterval(double min, double max)
 	//	updateAxisScale();
 }
 
-void PlotAxis::setVisible(bool val) { m_plot->setAxisVisible(m_axisId, val); }
+void PlotAxis::setVisible(bool val)
+{
+	m_plot->setAxisVisible(m_axisId, val);
+}
 
 void PlotAxis::updateAxisScale()
 {
@@ -135,16 +147,34 @@ void PlotAxis::setMax(double newMax)
 	emit maxChanged();
 }
 
-OscScaleDraw *PlotAxis::scaleDraw() const { return m_scaleDraw; }
+OscScaleDraw *PlotAxis::scaleDraw() const
+{
+	return m_scaleDraw;
+}
 
-OscScaleEngine *PlotAxis::scaleEngine() const { return m_scaleEngine; }
+OscScaleEngine *PlotAxis::scaleEngine() const
+{
+	return m_scaleEngine;
+}
 
-QwtPlotZoomer *PlotAxis::zoomer() const { return m_zoomer; }
+QwtPlotZoomer *PlotAxis::zoomer() const
+{
+	return m_zoomer;
+}
 
-double PlotAxis::max() const { return m_max; }
+double PlotAxis::max() const
+{
+	return m_max;
+}
 
-double PlotAxis::min() const { return m_min; }
+double PlotAxis::min() const
+{
+	return m_min;
+}
 
-const QwtAxisId &PlotAxis::axisId() const { return m_axisId; }
+const QwtAxisId &PlotAxis::axisId() const
+{
+	return m_axisId;
+}
 
 #include "moc_plotaxis.cpp"

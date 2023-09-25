@@ -49,8 +49,14 @@ public:
 	{
 	}
 
-	int id() { return m_id; }
-	int channel_id() { return m_chn_id; }
+	int id()
+	{
+		return m_id;
+	}
+	int channel_id()
+	{
+		return m_chn_id;
+	}
 
 	bool operator==(const MeasurementItem &other) const
 	{
@@ -58,7 +64,10 @@ public:
 
 		return isEqual;
 	}
-	bool operator!=(const MeasurementItem &other) const { return !(*this == other); }
+	bool operator!=(const MeasurementItem &other) const
+	{
+		return !(*this == other);
+	}
 
 private:
 	int m_id;

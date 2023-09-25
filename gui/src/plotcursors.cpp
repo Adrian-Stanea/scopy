@@ -13,9 +13,15 @@ Cursor::Cursor(PlotWidget *p, PlotAxis *ax, QPen pen)
 
 Cursor::~Cursor() {}
 
-PlotLineHandle *Cursor::cursorHandle() const { return m_cursorHandle; }
+PlotLineHandle *Cursor::cursorHandle() const
+{
+	return m_cursorHandle;
+}
 
-void Cursor::setAxis(PlotAxis *ax) { m_axis = ax; }
+void Cursor::setAxis(PlotAxis *ax)
+{
+	m_axis = ax;
+}
 
 void Cursor::setVisible(bool b)
 {

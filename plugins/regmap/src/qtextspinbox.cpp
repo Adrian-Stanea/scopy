@@ -11,9 +11,15 @@ void QTextSpinBox::setValues(QList<QString> *acceptedValues)
 	setRange(1, acceptedValues->size());
 }
 
-QString QTextSpinBox::textFromValue(int value) const { return acceptedValues->value(value); }
+QString QTextSpinBox::textFromValue(int value) const
+{
+	return acceptedValues->value(value);
+}
 
-int QTextSpinBox::valueFromText(const QString &text) const { return acceptedValues->indexOf(text); }
+int QTextSpinBox::valueFromText(const QString &text) const
+{
+	return acceptedValues->indexOf(text);
+}
 
 QValidator::State QTextSpinBox::validate(QString &text, int &pos) const
 {

@@ -47,7 +47,10 @@ QString BufferMenu::getInfoMessage()
 	return defaultMessage;
 }
 
-void BufferMenu::addMenuLayout(QBoxLayout *layout) { m_menuLayers.push_back(layout); }
+void BufferMenu::addMenuLayout(QBoxLayout *layout)
+{
+	m_menuLayers.push_back(layout);
+}
 
 void BufferMenu::setupVerticalSettingsMenu(QWidget *settingsWidget, QString unit, double yMin, double yMax)
 {
@@ -73,11 +76,20 @@ void BufferMenu::setupVerticalSettingsMenu(QWidget *settingsWidget, QString unit
 	});
 }
 
-void BufferMenu::setAttrValues(QMap<QString, QMap<QString, QStringList>> values) { m_attrValues = values; }
+void BufferMenu::setAttrValues(QMap<QString, QMap<QString, QStringList>> values)
+{
+	m_attrValues = values;
+}
 
-QMap<QString, QMap<QString, QStringList>> BufferMenu::getAttrValues() { return m_attrValues; }
+QMap<QString, QMap<QString, QStringList>> BufferMenu::getAttrValues()
+{
+	return m_attrValues;
+}
 
-QVector<QBoxLayout *> BufferMenu::getMenuLayers() { return m_menuLayers; }
+QVector<QBoxLayout *> BufferMenu::getMenuLayers()
+{
+	return m_menuLayers;
+}
 
 double BufferMenu::convertFromRaw(int rawValue, QString chnlType)
 {
@@ -300,7 +312,10 @@ void DigitalInLoopMenu::onBroadcastThresholdRead(QString value)
 	m_thresholdLineEdit->blockSignals(false);
 }
 
-void DigitalInLoopMenu::onThresholdControlEnable(bool enabled) { m_thresholdLineEdit->setEnabled(enabled); }
+void DigitalInLoopMenu::onThresholdControlEnable(bool enabled)
+{
+	m_thresholdLineEdit->setEnabled(enabled);
+}
 
 VoltageOutMenu::VoltageOutMenu(QWidget *parent, QString chnlFunction)
 	: BufferMenu(parent, chnlFunction)
@@ -757,7 +772,10 @@ WithoutAdvSettings::WithoutAdvSettings(QWidget *parent, QString chnlFunction)
 
 WithoutAdvSettings::~WithoutAdvSettings() {}
 
-void WithoutAdvSettings::init() { BufferMenu::init(); }
+void WithoutAdvSettings::init()
+{
+	BufferMenu::init();
+}
 
 void WithoutAdvSettings::connectSignalsToSlots() {}
 
@@ -848,4 +866,7 @@ void DigitalInMenu::onBroadcastThresholdRead(QString value)
 	m_thresholdLineEdit->blockSignals(false);
 }
 
-void DigitalInMenu::onThresholdControlEnable(bool enabled) { m_thresholdLineEdit->setEnabled(enabled); }
+void DigitalInMenu::onThresholdControlEnable(bool enabled)
+{
+	m_thresholdLineEdit->setEnabled(enabled);
+}

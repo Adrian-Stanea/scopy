@@ -139,7 +139,7 @@ ScopyMainWindow::ScopyMainWindow(QWidget *parent)
 
 	initApi();
 #ifdef SCOPY_DEV_MODE
-	// this is an example of how autoconnect is done
+// this is an example of how autoconnect is done
 
 //	 auto id = api->addDevice("m2k","ip:127.0.0.1");
 //	 auto id = api->addDevice("iio","ip:10.48.65.163");
@@ -179,9 +179,15 @@ void ScopyMainWindow::load(QString file)
 	dm->load(s);
 }
 
-void ScopyMainWindow::closeEvent(QCloseEvent *event) { dm->disconnectAll(); }
+void ScopyMainWindow::closeEvent(QCloseEvent *event)
+{
+	dm->disconnectAll();
+}
 
-void ScopyMainWindow::requestTools(QString id) { toolman->showToolList(id); }
+void ScopyMainWindow::requestTools(QString id)
+{
+	toolman->showToolList(id);
+}
 
 ScopyMainWindow::~ScopyMainWindow()
 {

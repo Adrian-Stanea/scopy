@@ -110,7 +110,10 @@ MarkerTable::MarkerTable(QWidget *parent)
 	ui->tableView->setItemDelegateForColumn(COL_CH, chnDelegate);
 }
 
-MarkerTable::~MarkerTable() { delete ui; }
+MarkerTable::~MarkerTable()
+{
+	delete ui;
+}
 
 int MarkerTable::rowOfMarker(int mkIdx, int chIdx) const
 {

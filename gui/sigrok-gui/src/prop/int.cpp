@@ -207,7 +207,10 @@ void Int::commit()
 	setter_(value_);
 }
 
-void Int::on_value_changed(int) { commit(); }
+void Int::on_value_changed(int)
+{
+	commit();
+}
 
 } // namespace prop
 } // namespace scopy

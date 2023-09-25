@@ -106,7 +106,10 @@ void RegisterController::registerChanged(uint32_t address)
 	}
 }
 
-void RegisterController::registerValueChanged(QString value) { regValue->setText(value); }
+void RegisterController::registerValueChanged(QString value)
+{
+	regValue->setText(value);
+}
 
 void RegisterController::addNameAndDescription(QString name, QString description)
 {

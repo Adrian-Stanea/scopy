@@ -158,7 +158,10 @@ AdcInstrument::AdcInstrument(PlotProxy *proxy, QWidget *parent)
 	init();
 }
 
-AdcInstrument::~AdcInstrument() { deinit(); }
+AdcInstrument::~AdcInstrument()
+{
+	deinit();
+}
 
 void AdcInstrument::setupCursorButtonHelper(MenuControlButton *cursor)
 {
@@ -257,7 +260,10 @@ void AdcInstrument::showMeasurements(bool b)
 	tool->openBottomContainerHelper(b);
 }
 
-bool AdcInstrument::running() const { return m_running; }
+bool AdcInstrument::running() const
+{
+	return m_running;
+}
 
 void AdcInstrument::setRunning(bool newRunning)
 {
@@ -267,9 +273,15 @@ void AdcInstrument::setRunning(bool newRunning)
 	Q_EMIT runningChanged(newRunning);
 }
 
-void AdcInstrument::start() { run(true); }
+void AdcInstrument::start()
+{
+	run(true);
+}
 
-void AdcInstrument::stop() { run(false); }
+void AdcInstrument::stop()
+{
+	run(false);
+}
 
 void AdcInstrument::startAddons()
 {

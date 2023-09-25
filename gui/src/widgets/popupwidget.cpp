@@ -43,7 +43,10 @@ PopupWidget::PopupWidget(QWidget *parent)
 	ui->continueButton->setFocus();
 }
 
-PopupWidget::~PopupWidget() { delete ui; }
+PopupWidget::~PopupWidget()
+{
+	delete ui;
+}
 
 void PopupWidget::setFocusOnContinueButton()
 {
@@ -57,13 +60,25 @@ void PopupWidget::setFocusOnExitButton()
 	ui->exitButton->setFocus();
 }
 
-QString PopupWidget::getDescription() { return ui->descriptionTextBrowser->toMarkdown(); }
+QString PopupWidget::getDescription()
+{
+	return ui->descriptionTextBrowser->toMarkdown();
+}
 
-void PopupWidget::setDescription(const QString &description) { ui->descriptionTextBrowser->setMarkdown(description); }
+void PopupWidget::setDescription(const QString &description)
+{
+	ui->descriptionTextBrowser->setMarkdown(description);
+}
 
-QString PopupWidget::getTitle() { return ui->titleLabel->text(); }
+QString PopupWidget::getTitle()
+{
+	return ui->titleLabel->text();
+}
 
-void PopupWidget::setTitle(const QString &title) { ui->titleLabel->setText(title); }
+void PopupWidget::setTitle(const QString &title)
+{
+	ui->titleLabel->setText(title);
+}
 
 void PopupWidget::enableTitleBar(bool enable)
 {
@@ -74,12 +89,24 @@ void PopupWidget::enableTitleBar(bool enable)
 	}
 }
 
-QString PopupWidget::getContinueButtonText() { return ui->continueButton->text(); }
+QString PopupWidget::getContinueButtonText()
+{
+	return ui->continueButton->text();
+}
 
-void PopupWidget::setContinueButtonText(const QString &text) { ui->continueButton->setText(text); }
+void PopupWidget::setContinueButtonText(const QString &text)
+{
+	ui->continueButton->setText(text);
+}
 
-QString PopupWidget::getExitButtonText() { return ui->exitButton->text(); }
+QString PopupWidget::getExitButtonText()
+{
+	return ui->exitButton->text();
+}
 
-void PopupWidget::setExitButtonText(const QString &text) { ui->exitButton->setText(text); }
+void PopupWidget::setExitButtonText(const QString &text)
+{
+	ui->exitButton->setText(text);
+}
 
 #include "moc_popupwidget.cpp"

@@ -52,7 +52,6 @@ GRTimeChannelAddon::GRTimeChannelAddon(QString ch, GRDeviceAddon *dev, GRTimePlo
 
 	name = m_grch->getChannelName();
 	auto plot = plotAddon->plot();
-	;
 
 	m_plotAxis = new PlotAxis(yPlotAxisPosition, plot, pen, this);
 	m_plotCh = new PlotChannel(name, pen, plot, plot->xAxis(), m_plotAxis, this);
@@ -292,9 +291,15 @@ QWidget *GRTimeChannelAddon::createMenu(QWidget *parent)
 	return w;
 }
 
-QString GRTimeChannelAddon::getName() { return name; }
+QString GRTimeChannelAddon::getName()
+{
+	return name;
+}
 
-QWidget *GRTimeChannelAddon::getWidget() { return widget; }
+QWidget *GRTimeChannelAddon::getWidget()
+{
+	return widget;
+}
 
 void GRTimeChannelAddon::setDevice(GRDeviceAddon *d)
 {
@@ -302,7 +307,10 @@ void GRTimeChannelAddon::setDevice(GRDeviceAddon *d)
 	d->registerChannel(this);
 }
 
-GRDeviceAddon *GRTimeChannelAddon::getDevice() { return m_dev; }
+GRDeviceAddon *GRTimeChannelAddon::getDevice()
+{
+	return m_dev;
+}
 
 void GRTimeChannelAddon::enable()
 {
@@ -414,9 +422,15 @@ void GRTimeChannelAddon::setYMode(YMode mode)
 	m_scOff->setOffset(offset);
 }
 
-GRIIOFloatChannelSrc *GRTimeChannelAddon::grch() const { return m_grch; }
+GRIIOFloatChannelSrc *GRTimeChannelAddon::grch() const
+{
+	return m_grch;
+}
 
-bool GRTimeChannelAddon::sampleRateAvailable() const { return m_sampleRateAvailable; }
+bool GRTimeChannelAddon::sampleRateAvailable() const
+{
+	return m_sampleRateAvailable;
+}
 
 void GRTimeChannelAddon::onInit()
 {
@@ -444,10 +458,22 @@ void GRTimeChannelAddon::onChannelAdded(ToolAddon *) {}
 
 void GRTimeChannelAddon::onChannelRemoved(ToolAddon *) {}
 
-PlotChannel *GRTimeChannelAddon::plotCh() const { return m_plotCh; }
+PlotChannel *GRTimeChannelAddon::plotCh() const
+{
+	return m_plotCh;
+}
 
-GRSignalPath *GRTimeChannelAddon::signalPath() const { return m_signalPath; }
+GRSignalPath *GRTimeChannelAddon::signalPath() const
+{
+	return m_signalPath;
+}
 
-QPen GRTimeChannelAddon::pen() const { return m_pen; }
+QPen GRTimeChannelAddon::pen() const
+{
+	return m_pen;
+}
 
-bool GRTimeChannelAddon::enabled() const { return m_enabled; }
+bool GRTimeChannelAddon::enabled() const
+{
+	return m_enabled;
+}

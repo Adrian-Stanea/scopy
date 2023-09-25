@@ -80,7 +80,10 @@ ScopyHomeAddPage::ScopyHomeAddPage(QWidget *parent, PluginManager *pm)
 	connect(emuWidget, &EmuWidget::emuDeviceAvailable, this, &ScopyHomeAddPage::onEmuDeviceAvailable);
 }
 
-ScopyHomeAddPage::~ScopyHomeAddPage() { delete ui; }
+ScopyHomeAddPage::~ScopyHomeAddPage()
+{
+	delete ui;
+}
 
 void ScopyHomeAddPage::initAddPage()
 {

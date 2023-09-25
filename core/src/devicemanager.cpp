@@ -193,8 +193,14 @@ void DeviceManager::disconnectDevice(QString id)
 	Q_EMIT deviceDisconnected(id, map[id]);
 }
 
-void DeviceManager::setExclusive(bool val) { exclusive = val; }
-bool DeviceManager::getExclusive() const { return exclusive; }
+void DeviceManager::setExclusive(bool val)
+{
+	exclusive = val;
+}
+bool DeviceManager::getExclusive() const
+{
+	return exclusive;
+}
 
 void DeviceManager::restartDevice()
 {

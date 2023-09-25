@@ -106,7 +106,10 @@ void RegisterMapInstrument::updateActiveRegisterMap(QString registerName)
 	}
 }
 
-void RegisterMapInstrument::toggleSearchBarVisible(bool visible) { searchBarWidget->setVisible(visible); }
+void RegisterMapInstrument::toggleSearchBarVisible(bool visible)
+{
+	searchBarWidget->setVisible(visible);
+}
 
 RegisterMapValues *RegisterMapInstrument::getRegisterMapValues(struct iio_device *dev)
 {
@@ -130,9 +133,15 @@ RegisterMapValues *RegisterMapInstrument::getRegisterMapValues(QString filePath)
 	return registerMapValues;
 }
 
-void RegisterMapInstrument::addTab(iio_device *dev, QString title) { addTab(dev, title, ""); }
+void RegisterMapInstrument::addTab(iio_device *dev, QString title)
+{
+	addTab(dev, title, "");
+}
 
-void RegisterMapInstrument::addTab(QString filePath, QString title) { addTab(nullptr, title, filePath); }
+void RegisterMapInstrument::addTab(QString filePath, QString title)
+{
+	addTab(nullptr, title, filePath);
+}
 
 void RegisterMapInstrument::addTab(iio_device *dev, QString title, QString xmlPath)
 {

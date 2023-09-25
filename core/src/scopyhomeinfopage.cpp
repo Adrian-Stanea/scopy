@@ -9,6 +9,9 @@ ScopyHomeInfoPage::ScopyHomeInfoPage(QWidget *parent)
 	ui->setupUi(this);
 }
 
-ScopyHomeInfoPage::~ScopyHomeInfoPage() { delete ui; }
+ScopyHomeInfoPage::~ScopyHomeInfoPage()
+{
+	delete ui;
+}
 
 #include "moc_scopyhomeinfopage.cpp"

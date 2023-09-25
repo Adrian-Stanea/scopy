@@ -96,7 +96,10 @@ RegisterSimpleWidget::RegisterSimpleWidget(QString name, QString address, QStrin
 	setToolTip(toolTip);
 }
 
-RegisterSimpleWidget::~RegisterSimpleWidget() { delete value; }
+RegisterSimpleWidget::~RegisterSimpleWidget()
+{
+	delete value;
+}
 
 void RegisterSimpleWidget::valueUpdated(uint32_t value)
 {

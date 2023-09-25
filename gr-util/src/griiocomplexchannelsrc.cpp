@@ -39,6 +39,12 @@ void GRIIOComplexChannelSrc::destroy_blks(GRTopBlock *top)
 	start_blk.clear();
 }
 
-const QString &GRIIOComplexChannelSrc::getChannelNameI() const { return channelNameI; }
+const QString &GRIIOComplexChannelSrc::getChannelNameI() const
+{
+	return channelNameI;
+}
 
-const QString &GRIIOComplexChannelSrc::getChannelNameQ() const { return channelNameQ; }
+const QString &GRIIOComplexChannelSrc::getChannelNameQ() const
+{
+	return channelNameQ;
+}

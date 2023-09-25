@@ -102,7 +102,10 @@ int DeviceBrowser::getIndexOfId(QString k)
 	return -1;
 }
 
-QString DeviceBrowser::getIdOfIndex(int idx) { return (list[idx]->property(devBrowserId).toString()); }
+QString DeviceBrowser::getIdOfIndex(int idx)
+{
+	return (list[idx]->property(devBrowserId).toString());
+}
 
 void DeviceBrowser::nextDevice()
 {
@@ -163,7 +166,10 @@ void DeviceBrowser::disconnectDevice(QString id)
 	w->setConnected(false);
 }
 
-DeviceIcon *DeviceBrowser::buildDeviceIcon(Device *d, QWidget *parent) { return new DeviceIconImpl(d, parent); }
+DeviceIcon *DeviceBrowser::buildDeviceIcon(Device *d, QWidget *parent)
+{
+	return new DeviceIconImpl(d, parent);
+}
 
 /*
    auto &&is = ui->wInfoPageStack;

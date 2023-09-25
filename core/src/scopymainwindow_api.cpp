@@ -160,3 +160,5 @@ bool ScopyMainWindow_API::sortByUUID(const QString &k1, const QString &k2)
 {
 	return k1.split("_").last() < k2.split("_").last();
 }
+
+#include "moc_scopymainwindow_api.cpp"

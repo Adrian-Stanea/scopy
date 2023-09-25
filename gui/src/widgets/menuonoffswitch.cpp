@@ -35,3 +35,5 @@ MenuOnOffSwitch::~MenuOnOffSwitch() {}
 QAbstractButton *MenuOnOffSwitch::onOffswitch() { return m_switch; }
 
 void MenuOnOffSwitch::applyStylesheet() { StyleHelper::MenuOnOffSwitch(this, "menuOnOffSwitch"); }
+
+#include "moc_menuonoffswitch.cpp"

@@ -188,3 +188,5 @@ void DropdownSwitchList::enterEvent(QEvent *event) { m_mouseInside = true; }
 void DropdownSwitchList::leaveEvent(QEvent *event) { m_mouseInside = false; }
 
 void DropdownSwitchList::resetIndex(int) { setCurrentIndex(-1); }
+
+#include "moc_dropdown_switch_list.cpp"

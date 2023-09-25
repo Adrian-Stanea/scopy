@@ -108,3 +108,5 @@ double HCursor::computePosition(int pos)
 	double offset = xMap.invTransform(pos);
 	return offset;
 }
+
+#include "moc_plotcursors.cpp"

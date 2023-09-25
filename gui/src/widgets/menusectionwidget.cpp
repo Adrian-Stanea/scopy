@@ -33,3 +33,5 @@ MenuVScrollArea::MenuVScrollArea(QWidget *parent)
 MenuVScrollArea::~MenuVScrollArea() {}
 
 QVBoxLayout *MenuVScrollArea::contentLayout() const { return m_layout; }
+
+#include "moc_menusectionwidget.cpp"

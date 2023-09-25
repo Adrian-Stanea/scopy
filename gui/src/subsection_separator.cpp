@@ -48,3 +48,5 @@ void SubsectionSeparator::setLineVisible(bool visible) { m_ui->lineSubsectionSep
 void SubsectionSeparator::setContent(QWidget *content) { m_ui->vLayoutContent->addWidget(content); }
 
 QWidget *SubsectionSeparator::getContentWidget() { return m_ui->widgetSubsectionContent; }
+
+#include "moc_subsection_separator.cpp"

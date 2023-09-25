@@ -142,3 +142,5 @@ void StatsLabel::setValue(double avg, double min, double max)
 void StatsLabel::setMeasurementValueFormatter(PrefixFormatter *f) { m_formatter = f; }
 
 QString StatsLabel::name() const { return m_name; }
+
+#include "moc_measurementlabel.cpp"

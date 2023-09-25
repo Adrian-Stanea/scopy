@@ -91,3 +91,5 @@ void OscCustomScrollArea::leaveEvent(QEvent *event)
 		setCursor(Qt::ArrowCursor);
 	inside = false;
 }
+
+#include "moc_osc_custom_scroll.cpp"

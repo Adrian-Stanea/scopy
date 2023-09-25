@@ -170,3 +170,5 @@ void StartStopRangeWidget::_setupSignalsAndSlots()
 		&StartStopRangeWidget::_onCenterSpanFrequencyChanged);
 	connect(span_freq, &ScaleSpinButton::valueChanged, this, &StartStopRangeWidget::_onCenterSpanFrequencyChanged);
 }
+
+#include "moc_startstoprangewidget.cpp"

@@ -69,3 +69,5 @@ void GenericMenu::hideEvent(QHideEvent *) { Q_EMIT menuVisibilityChanged(false);
 void GenericMenu::showEvent(QShowEvent *) { Q_EMIT menuVisibilityChanged(true); }
 
 void GenericMenu::addNewHeaderWidget(QWidget *widget) { m_menuHeader->addNewHeaderWidget(widget); }
+
+#include "moc_generic_menu.cpp"

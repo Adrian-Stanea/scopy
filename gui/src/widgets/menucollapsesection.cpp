@@ -78,3 +78,5 @@ QVBoxLayout *MenuCollapseSection::contentLayout() const { return m_contLayout; }
 // void MenuCollapseSection::add(QWidget *ch) {
 //	m_contLayout->addWidget(ch);
 // }
+
+#include "moc_menucollapsesection.cpp"

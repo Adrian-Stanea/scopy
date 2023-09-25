@@ -53,3 +53,5 @@ void MenuCombo::applyStylesheet()
 	StyleHelper::MenuComboLabel(m_label, "menuLabel");
 	StyleHelper::MenuComboBox(m_combo, "menuCombobox");
 }
+
+#include "moc_menucombo.cpp"

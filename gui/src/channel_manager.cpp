@@ -374,3 +374,5 @@ const QString &ChannelManager::getToolStatus() const
 }
 
 void ChannelManager::setToolStatus(const QString &newToolStatus) { toolStatus->setText(newToolStatus); }
+
+#include "moc_channel_manager.cpp"

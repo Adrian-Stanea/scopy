@@ -911,3 +911,5 @@ void StyleHelper::TutorialChapterTitleLabel(QLabel *w, QString objectName)
 	style.replace("&&LabelText&&", StyleHelper::getColor("LabelText"));
 	w->setStyleSheet(style);
 }
+
+#include "moc_stylehelper.cpp"

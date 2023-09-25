@@ -323,3 +323,5 @@ HorizHandlesArea *PlotWidget::topHandlesArea() const { return m_topHandlesArea; 
 HorizHandlesArea *PlotWidget::bottomHandlesArea() const { return m_bottomHandlesArea; }
 
 SymbolController *PlotWidget::symbolCtrl() const { return m_symbolCtrl; }
+
+#include "moc_plotwidget.cpp"

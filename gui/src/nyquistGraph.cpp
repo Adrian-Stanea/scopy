@@ -263,3 +263,5 @@ void NyquistGraph::leaveEvent(QEvent *event)
 	QApplication::setOverrideCursor(Qt::ArrowCursor);
 	QwtPolarPlot::leaveEvent(event);
 }
+
+#include "moc_nyquistGraph.cpp"

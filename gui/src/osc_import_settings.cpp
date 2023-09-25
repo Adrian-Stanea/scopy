@@ -32,3 +32,5 @@ ImportSettings::ImportSettings(QWidget *parent)
 }
 
 ImportSettings::~ImportSettings() {}
+
+#include "moc_osc_import_settings.cpp"

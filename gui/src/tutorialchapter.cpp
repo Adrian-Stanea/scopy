@@ -81,3 +81,5 @@ void TutorialChapter::setAnchor(scopy::HoverPosition newAnchor) { anchor = newAn
 scopy::HoverPosition TutorialChapter::getContent() const { return content; }
 
 void TutorialChapter::setContent(scopy::HoverPosition newContent) { content = newContent; }
+
+#include "moc_tutorialchapter.cpp"

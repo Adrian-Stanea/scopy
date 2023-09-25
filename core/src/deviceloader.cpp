@@ -51,3 +51,5 @@ void DeviceLoader::syncInit()
 	d->init();
 	Q_EMIT initialized();
 }
+
+#include "moc_deviceloader.cpp"

@@ -67,3 +67,5 @@ QPushButton *PageNavigationWidget::getBackwardBtn() { return backwardButton; }
 QPushButton *PageNavigationWidget::getForwardBtn() { return forwardButton; }
 
 QPushButton *PageNavigationWidget::getOpenBtn() { return openButton; }
+
+#include "moc_pagenavigationwidget.cpp"

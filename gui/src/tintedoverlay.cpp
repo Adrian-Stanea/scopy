@@ -49,3 +49,5 @@ void TintedOverlay::mousePressEvent(QMouseEvent *ev)
 	// prevent clicks from being sent to parents
 	ev->accept();
 }
+
+#include "moc_tintedoverlay.cpp"

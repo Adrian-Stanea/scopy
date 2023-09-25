@@ -231,3 +231,5 @@ void NumberSeries::buildNumberSeries()
 			m_numbers.push_back(i * m_templateSteps[step]);
 		}
 }
+
+#include "moc_plot_utils.cpp"

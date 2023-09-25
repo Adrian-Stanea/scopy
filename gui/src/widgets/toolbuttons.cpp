@@ -146,3 +146,5 @@ SingleShotBtn::SingleShotBtn(QWidget *parent)
 	setIcon(icon1);
 	setLayoutDirection(Qt::RightToLeft);
 }
+
+#include "moc_toolbuttons.cpp"

@@ -33,3 +33,5 @@ void ComboBoxLineEdit::mousePressEvent(QMouseEvent *event) { QWidget::mousePress
 void ComboBoxLineEdit::enterEvent(QEvent *event) { QWidget::enterEvent(event); }
 
 void ComboBoxLineEdit::leaveEvent(QEvent *event) { QWidget::leaveEvent(event); }
+
+#include "moc_ComboBoxLineEdit.cpp"

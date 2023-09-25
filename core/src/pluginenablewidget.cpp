@@ -33,3 +33,5 @@ void PluginEnableWidget::setDescription(QString description)
 }
 
 QCheckBox *PluginEnableWidget::checkBox() const { return m_checkBox; }
+
+#include "moc_pluginenablewidget.cpp"

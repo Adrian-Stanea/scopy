@@ -147,3 +147,5 @@ void PlotChannel::detach() { m_curve->detach(); }
 PlotAxis *PlotChannel::yAxis() const { return m_yAxis; }
 
 PlotAxis *PlotChannel::xAxis() const { return m_xAxis; }
+
+#include "moc_plotchannel.cpp"

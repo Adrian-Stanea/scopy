@@ -146,3 +146,5 @@ double PlotAxis::max() const { return m_max; }
 double PlotAxis::min() const { return m_min; }
 
 const QwtAxisId &PlotAxis::axisId() const { return m_axisId; }
+
+#include "moc_plotaxis.cpp"

@@ -71,3 +71,5 @@ void DetachedToolWindow::loadToolGeometry(ToolMenuEntry *tme, QWidget *w)
 		qDebug(CAT_DETACHEDTOOL) << "Loading " << prefId << tme->tool()->geometry();
 	}
 }
+
+#include "moc_detachedtoolwindow.cpp"

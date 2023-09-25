@@ -42,3 +42,5 @@ QWidget *DetachedToolWindowManager::getWidget(QString key)
 }
 
 bool DetachedToolWindowManager::contains(QString key) { return map.contains(key); }
+
+#include "moc_detachedtoolwindowmanager.cpp"

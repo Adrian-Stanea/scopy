@@ -143,3 +143,5 @@ void StatsPanel::removeStat(QWidget *stat)
 void StatsPanel::clear() {}
 
 void StatsPanel::sort() {}
+
+#include "moc_measurementpanel.cpp"

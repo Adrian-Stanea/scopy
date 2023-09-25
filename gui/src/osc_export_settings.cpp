@@ -158,3 +158,5 @@ void ExportSettings::setTitleLabelVisible(bool enabled)
 }
 
 void ExportSettings::setExportAllButtonLabel(const QString &text) { ui->label_3->setText(text); }
+
+#include "moc_osc_export_settings.cpp"

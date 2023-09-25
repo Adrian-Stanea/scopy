@@ -148,3 +148,5 @@ void DbClickButtons::onButtonClicked()
 }
 
 void DbClickButtons::toggleButton(int btnId) { setButtonChecked(btnId, !btn_states[btnId]); }
+
+#include "moc_db_click_buttons.cpp"

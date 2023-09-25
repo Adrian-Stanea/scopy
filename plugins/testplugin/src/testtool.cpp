@@ -1,29 +1,28 @@
 #include "testtool.h"
-#include <QHBoxLayout>
-#include <gui/menu_anim.hpp>
-#include <QDebug>
-#include <gui/stylehelper.h>
-#include <QButtonGroup>
-#include <widgets/hoverwidget.h>
-#include "plotwidget.h"
+
 #include "plotaxis.h"
 #include "plotcursors.h"
+#include "plotwidget.h"
 #include "spinbox_a.hpp"
 
-#include "spinbox_a.hpp"
-#include <gui/widgets/hoverwidget.h>
-#include <gui/widgets/menucontrolbutton.h>
-#include <gui/widgets/toolbuttons.h>
-#include <gui/widgets/menuheader.h>
+#include <QButtonGroup>
+#include <QDebug>
+#include <QHBoxLayout>
+
+#include <gui/menu_anim.hpp>
 #include <gui/stylehelper.h>
-#include <gui/widgets/menucombo.h>
-#include <gui/widgets/menusectionwidget.h>
-#include <gui/widgets/menuonoffswitch.h>
-#include <gui/widgets/menucollapsesection.h>
-#include <gui/widgets/menubigswitch.h>
-#include <gui/widgets/menulineedit.h>
-#include <gui/widgets/verticalchannelmanager.h>
 #include <gui/widgets/hoverwidget.h>
+#include <gui/widgets/menubigswitch.h>
+#include <gui/widgets/menucollapsesection.h>
+#include <gui/widgets/menucombo.h>
+#include <gui/widgets/menucontrolbutton.h>
+#include <gui/widgets/menuheader.h>
+#include <gui/widgets/menulineedit.h>
+#include <gui/widgets/menuonoffswitch.h>
+#include <gui/widgets/menusectionwidget.h>
+#include <gui/widgets/toolbuttons.h>
+#include <gui/widgets/verticalchannelmanager.h>
+#include <widgets/hoverwidget.h>
 
 using namespace scopy;
 
@@ -44,7 +43,7 @@ TestTool::TestTool(QWidget *parent)
 	lay->addWidget(tool);
 
 	StyleHelper::GetInstance()->initColorMap();
-	btn3 = new OpenLastMenuBtn(dynamic_cast<MenuHAnim*>(tool->rightContainer()),false,this);
+	btn3 = new OpenLastMenuBtn(dynamic_cast<MenuHAnim *>(tool->rightContainer()), false, this);
 	tool->setLeftContainerWidth(200);
 	tool->setRightContainerWidth(300);
 	tool->openLeftContainerHelper(false);
@@ -52,7 +51,7 @@ TestTool::TestTool(QWidget *parent)
 
 	PlotWidget *plot = new PlotWidget(this);
 	tool->addWidgetToCentralContainerHelper(plot);
-	plot->xAxis()->setInterval(0,1);
+	plot->xAxis()->setInterval(0, 1);
 	plot->replot();
 
 	GearBtn *btn5 = new GearBtn(this);
@@ -63,20 +62,20 @@ TestTool::TestTool(QWidget *parent)
 
 	QTimer *dataRefreshTimer = new QTimer(this);
 	dataRefreshTimer->setInterval(10);
-	connect(runBtn,&QPushButton::toggled, this, [=](bool b) {
+	connect(runBtn, &QPushButton::toggled, this, [=](bool b) {
 		if(b) {
 			dataRefreshTimer->start();
 		} else {
 			dataRefreshTimer->stop();
 		}
 	});
-	connect(dataRefreshTimer,&QTimer::timeout, this, &TestTool::acquireData);
-	connect(dataRefreshTimer,&QTimer::timeout, plot, &PlotWidget::replot);
+	connect(dataRefreshTimer, &QTimer::timeout, this, &TestTool::acquireData);
+	connect(dataRefreshTimer, &QTimer::timeout, plot, &PlotWidget::replot);
 
 	MenuControlButton *channels = new MenuControlButton(this);
 	channels->setCheckBoxStyle(MenuControlButton::CS_CIRCLE);
 	channels->setName("Channels");
-//	ch0->setColor(StyleHelper::getColor("CH0"));
+	//	ch0->setColor(StyleHelper::getColor("CH0"));
 	channels->checkBox()->setVisible(false);
 	channels->setChecked(false);
 
@@ -94,14 +93,13 @@ TestTool::TestTool(QWidget *parent)
 	QPen ch1pen = QPen(QColor(StyleHelper::getColor("CH1")), 1);
 	auto *ch1PlotAxis = new PlotAxis(QwtAxis::YLeft, plot, ch1pen);
 	PlotChannel *ch1_plotch = new PlotChannel("Channel1", ch1pen, plot, plot->xAxis(), ch1PlotAxis, this);
-	ch1_plotch->setHandle(new PlotAxisHandle(ch1pen ,ch1PlotAxis,plot, QwtAxis::YLeft, this));
+	ch1_plotch->setHandle(new PlotAxisHandle(ch1pen, ch1PlotAxis, plot, QwtAxis::YLeft, this));
 	plot->addPlotAxisHandle(ch1_plotch->handle());
 
-	connect(ch1->checkBox(),&QCheckBox::toggled, ch1_plotch, &PlotChannel::setEnabled);
-	connect(ch1->checkBox(),&QCheckBox::toggled, this, [=](){plot->replot();});
-	connect(ch1, &QAbstractButton::toggled, this, [=](){plot->selectChannel(ch1_plotch);});
-	ch1_plotch->curve()->setRawSamples(xTime.data(),y1Volt.data(),xTime.size());
-
+	connect(ch1->checkBox(), &QCheckBox::toggled, ch1_plotch, &PlotChannel::setEnabled);
+	connect(ch1->checkBox(), &QCheckBox::toggled, this, [=]() { plot->replot(); });
+	connect(ch1, &QAbstractButton::toggled, this, [=]() { plot->selectChannel(ch1_plotch); });
+	ch1_plotch->curve()->setRawSamples(xTime.data(), y1Volt.data(), xTime.size());
 
 	MenuControlButton *ch2 = new MenuControlButton(this);
 	ch2->setCheckBoxStyle(MenuControlButton::CS_CIRCLE);
@@ -112,12 +110,12 @@ TestTool::TestTool(QWidget *parent)
 	QPen ch2pen = QPen(QColor(StyleHelper::getColor("CH2")), 1);
 	auto *ch2PlotAxis = new PlotAxis(QwtAxis::YLeft, plot, ch2pen);
 	PlotChannel *ch2_plotch = new PlotChannel("Channel2", ch2pen, plot, plot->xAxis(), ch2PlotAxis, this);
-	ch2_plotch->setHandle(new PlotAxisHandle(ch2pen,ch2PlotAxis, plot, QwtAxis::YRight, this));
+	ch2_plotch->setHandle(new PlotAxisHandle(ch2pen, ch2PlotAxis, plot, QwtAxis::YRight, this));
 	plot->addPlotAxisHandle(ch2_plotch->handle());
-	connect(ch2->checkBox(),&QCheckBox::toggled, ch2_plotch, &PlotChannel::setEnabled);
-	connect(ch2->checkBox(),&QCheckBox::toggled, this, [=](){plot->replot();});
-	connect(ch2, &QAbstractButton::toggled, this, [=](){plot->selectChannel(ch2_plotch);});
-	ch2_plotch->curve()->setRawSamples(xTime.data(),y2Volt.data(),xTime.size());
+	connect(ch2->checkBox(), &QCheckBox::toggled, ch2_plotch, &PlotChannel::setEnabled);
+	connect(ch2->checkBox(), &QCheckBox::toggled, this, [=]() { plot->replot(); });
+	connect(ch2, &QAbstractButton::toggled, this, [=]() { plot->selectChannel(ch2_plotch); });
+	ch2_plotch->curve()->setRawSamples(xTime.data(), y2Volt.data(), xTime.size());
 
 	MenuControlButton *cursor = new MenuControlButton(this);
 	cursor->setName("Cursors");
@@ -125,14 +123,14 @@ TestTool::TestTool(QWidget *parent)
 	MenuControlButton *measure = new MenuControlButton(this);
 	measure->setName("Measure");
 
-	tool->addWidgetToTopContainerMenuControlHelper(btn3,TTA_RIGHT);
-	tool->addWidgetToTopContainerMenuControlHelper(btn5,TTA_LEFT);
+	tool->addWidgetToTopContainerMenuControlHelper(btn3, TTA_RIGHT);
+	tool->addWidgetToTopContainerMenuControlHelper(btn5, TTA_LEFT);
 
-	tool->addWidgetToTopContainerHelper(runBtn,TTA_RIGHT);
-	tool->addWidgetToTopContainerHelper(singleBtn,TTA_RIGHT);
+	tool->addWidgetToTopContainerHelper(runBtn, TTA_RIGHT);
+	tool->addWidgetToTopContainerHelper(singleBtn, TTA_RIGHT);
 
-	tool->addWidgetToTopContainerHelper(infoBtn,TTA_LEFT);
-	tool->addWidgetToTopContainerHelper(printBtn,TTA_LEFT);
+	tool->addWidgetToTopContainerHelper(infoBtn, TTA_LEFT);
+	tool->addWidgetToTopContainerHelper(printBtn, TTA_LEFT);
 
 	tool->addWidgetToBottomContainerHelper(channels, TTA_LEFT);
 	tool->addWidgetToBottomContainerHelper(ch1, TTA_LEFT);
@@ -145,15 +143,15 @@ TestTool::TestTool(QWidget *parent)
 	QLabel *wch1 = new QLabel("Channel1Label");
 	QLabel *wch2 = new QLabel("Channel2Label");
 
-	tool->rightStack()->add("ch0",wch0);
-	tool->rightStack()->add("ch1",wch1);
-	tool->rightStack()->add("ch2",wch2);
+	tool->rightStack()->add("ch0", wch0);
+	tool->rightStack()->add("ch1", wch1);
+	tool->rightStack()->add("ch2", wch2);
 
-	connect(channels->button(),&QAbstractButton::pressed,this,[=](){tool->requestMenu("ch0");});
-	connect(ch1->button(),&QAbstractButton::pressed,this,[=](){tool->requestMenu("ch1");});
-	connect(ch2->button(),&QAbstractButton::pressed,this,[=](){tool->requestMenu("ch2");});
+	connect(channels->button(), &QAbstractButton::pressed, this, [=]() { tool->requestMenu("ch0"); });
+	connect(ch1->button(), &QAbstractButton::pressed, this, [=]() { tool->requestMenu("ch1"); });
+	connect(ch2->button(), &QAbstractButton::pressed, this, [=]() { tool->requestMenu("ch2"); });
 
-	auto grp = static_cast<OpenLastMenuBtn*>(btn3)->getButtonGroup();
+	auto grp = static_cast<OpenLastMenuBtn *>(btn3)->getButtonGroup();
 	grp->addButton(channels->button());
 	grp->addButton(ch1->button());
 	grp->addButton(ch2->button());
@@ -183,10 +181,10 @@ TestTool::TestTool(QWidget *parent)
 
 	vcm->add(dev1);
 	vcm->add(fileChannel);
-	vcm->setFixedSize(260,350);
+	vcm->setFixedSize(260, 350);
 
 	HoverWidget *hv = new HoverWidget(vcm, channels, tool);
-	hv->setAnchorOffset(QPoint(0,-10));
+	hv->setAnchorOffset(QPoint(0, -10));
 	hv->setAnchorPos(HoverPosition::HP_TOPLEFT);
 	hv->setContentPos(HoverPosition::HP_TOPRIGHT);
 
@@ -195,32 +193,31 @@ TestTool::TestTool(QWidget *parent)
 	plot->bottomHandlesArea()->setVisible(true);
 	plot->topHandlesArea()->setVisible(true);
 
-	PlotCursors* plotCursors = new PlotCursors(plot);
+	PlotCursors *plotCursors = new PlotCursors(plot);
 	plotCursors->setVisible(false);
 
-	PlotCursorReadouts* plotCursorReadouts = new PlotCursorReadouts(plot);
+	PlotCursorReadouts *plotCursorReadouts = new PlotCursorReadouts(plot);
 	plotCursorReadouts->hide();
-	plotCursorReadouts->setFixedSize(200,80);
-	plotCursorReadouts->move(100,100);
+	plotCursorReadouts->setFixedSize(200, 80);
+	plotCursorReadouts->move(100, 100);
 
-	connect(cursor,&QAbstractButton::toggled, plotCursorReadouts, &PlotCursorReadouts::setVisible);
-	connect(cursor,&QAbstractButton::toggled, plotCursors, &PlotCursors::setVisible);
+	connect(cursor, &QAbstractButton::toggled, plotCursorReadouts, &PlotCursorReadouts::setVisible);
+	connect(cursor, &QAbstractButton::toggled, plotCursors, &PlotCursors::setVisible);
 
-	connect(plotCursors, &PlotCursors::v1PositionChanged,plotCursorReadouts,&PlotCursorReadouts::setV1);
-	connect(plotCursors, &PlotCursors::v2PositionChanged,plotCursorReadouts,&PlotCursorReadouts::setV2);
-	connect(plotCursors, &PlotCursors::h1PositionChanged,plotCursorReadouts,&PlotCursorReadouts::setH1);
-	connect(plotCursors, &PlotCursors::h2PositionChanged,plotCursorReadouts,&PlotCursorReadouts::setH2);
+	connect(plotCursors, &PlotCursors::v1PositionChanged, plotCursorReadouts, &PlotCursorReadouts::setV1);
+	connect(plotCursors, &PlotCursors::v2PositionChanged, plotCursorReadouts, &PlotCursorReadouts::setV2);
+	connect(plotCursors, &PlotCursors::h1PositionChanged, plotCursorReadouts, &PlotCursorReadouts::setH1);
+	connect(plotCursors, &PlotCursors::h2PositionChanged, plotCursorReadouts, &PlotCursorReadouts::setH2);
 
 	connect(channels, &QAbstractButton::toggled, this, [=](bool b) {
-		qInfo()<<"setVisible: "<<b;
+		qInfo() << "setVisible: " << b;
 		hv->setVisible(b);
 		hv->raise();
-
 	});
 }
 
-
-QWidget* TestTool::createMenu(QWidget* parent) {
+QWidget *TestTool::createMenu(QWidget *parent)
+{
 	QWidget *w = new QWidget(parent);
 	QVBoxLayout *lay = new QVBoxLayout(w);
 	lay->setMargin(0);
@@ -231,22 +228,18 @@ QWidget* TestTool::createMenu(QWidget* parent) {
 	MenuComboWidget *yscale = new MenuComboWidget(tr("Y-Axis"), w);
 	MenuSectionWidget *vdiv = new MenuSectionWidget(w);
 
-	QLabel *txt = new QLabel("VDiv",vdiv);
-	StyleHelper::MenuSmallLabel(txt,"vdivLabel");
+	QLabel *txt = new QLabel("VDiv", vdiv);
+	StyleHelper::MenuSmallLabel(txt, "vdivLabel");
 	QComboBox *cbb = new QComboBox(vdiv);
 	cbb->addItem("Lorem");
 	cbb->addItem("Ipsum");
 	cbb->addItem("Corectipsum");
-	StyleHelper::MenuComboBox(cbb,"vdivCombo");
+	StyleHelper::MenuComboBox(cbb, "vdivCombo");
 
-	PositionSpinButton *ssb = new PositionSpinButton(
-	    {
-		{"Hz",1e0},
-		{"kHz",1e3},
-		{"MHz",1e6}
-	    },"Volts",0,1000,true,false,vdiv);
+	PositionSpinButton *ssb =
+		new PositionSpinButton({{"Hz", 1e0}, {"kHz", 1e3}, {"MHz", 1e6}}, "Volts", 0, 1000, true, false, vdiv);
 	ssb->setMaxValue(1000);
-	StyleHelper::MenuSpinBox(ssb,"vdivSpin");
+	StyleHelper::MenuSpinBox(ssb, "vdivSpin");
 
 	MenuOnOffSwitch *autoscale = new MenuOnOffSwitch(tr("AUTOSCALE"), vdiv, false);
 
@@ -259,7 +252,7 @@ QWidget* TestTool::createMenu(QWidget* parent) {
 
 	//	MenuBigSwitch *bigsw = new MenuBigSwitch("Yes", "No", vdiv);
 	QLabel *lbl = new QLabel("AUTOSCALE");
-	StyleHelper::MenuSmallLabel(lbl,"edit");
+	StyleHelper::MenuSmallLabel(lbl, "edit");
 	MenuLineEdit *edit = new MenuLineEdit(vdiv);
 
 	vdiv->contentLayout()->addWidget(section1);
@@ -274,33 +267,32 @@ QWidget* TestTool::createMenu(QWidget* parent) {
 	lay->addWidget(header);
 	lay->addWidget(yscale);
 	lay->addWidget(vdiv);
-	lay->addSpacerItem(new QSpacerItem(40,40,QSizePolicy::Minimum,QSizePolicy::Expanding));
+	lay->addSpacerItem(new QSpacerItem(40, 40, QSizePolicy::Minimum, QSizePolicy::Expanding));
 
 	QPushButton *btn = new QPushButton("TESTBtn");
-	StyleHelper::BlueButton(btn,"TestBtn");
+	StyleHelper::BlueButton(btn, "TestBtn");
 	vdiv->contentLayout()->addWidget(btn);
 	vdiv->contentLayout()->setSpacing(4);
-
 
 	return w;
 }
 
-
 void TestTool::initData()
 {
-	for(int i = 0; i < testDataSize ; i++){
-		xTime.push_back( (i / (double)testDataSize));
-		y1Volt.push_back(amplitude*sin(2 * 10 * 3.1416 * i / (double)testDataSize));
-		y2Volt.push_back(amplitude*sin(2 * 20 * 3.1416 * i / (double)testDataSize));
+	for(int i = 0; i < testDataSize; i++) {
+		xTime.push_back((i / (double)testDataSize));
+		y1Volt.push_back(amplitude * sin(2 * 10 * 3.1416 * i / (double)testDataSize));
+		y2Volt.push_back(amplitude * sin(2 * 20 * 3.1416 * i / (double)testDataSize));
 	}
 }
 
-void TestTool::acquireData() {
+void TestTool::acquireData()
+{
 	y1Volt.clear();
 	y2Volt.clear();
-	for(int i = 0; i < testDataSize ; i++){
-		y1Volt.push_back(amplitude*sin(2 * 10 * 3.1416 * i / (double)testDataSize + phase));
-		y2Volt.push_back(amplitude*sin(2 * 17 * 3.1416 * i / (double)testDataSize + 2*phase));
+	for(int i = 0; i < testDataSize; i++) {
+		y1Volt.push_back(amplitude * sin(2 * 10 * 3.1416 * i / (double)testDataSize + phase));
+		y2Volt.push_back(amplitude * sin(2 * 17 * 3.1416 * i / (double)testDataSize + 2 * phase));
 	}
 	phase++;
 }

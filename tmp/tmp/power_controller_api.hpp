@@ -29,9 +29,7 @@ class PowerController_API : public ApiObject
 	Q_OBJECT
 
 	Q_PROPERTY(bool sync READ syncEnabled WRITE enableSync);
-	Q_PROPERTY(int tracking_percent
-			READ getTrackingPercent
-			WRITE setTrackingPercent);
+	Q_PROPERTY(int tracking_percent READ getTrackingPercent WRITE setTrackingPercent);
 	Q_PROPERTY(double dac1_value READ valueDac1 WRITE setValueDac1);
 	Q_PROPERTY(double dac2_value READ valueDac2 WRITE setValueDac2);
 	Q_PROPERTY(bool dac1_enabled READ Dac1Enabled WRITE setDac1Enabled);
@@ -39,8 +37,11 @@ class PowerController_API : public ApiObject
 	Q_PROPERTY(QString notes READ getNotes WRITE setNotes)
 
 public:
-	explicit PowerController_API(PowerController *pw) :
-		ApiObject(), pw(pw) {}
+	explicit PowerController_API(PowerController *pw)
+		: ApiObject()
+		, pw(pw)
+	{
+	}
 	~PowerController_API() {}
 
 	bool syncEnabled() const;
@@ -69,6 +70,6 @@ public:
 private:
 	PowerController *pw;
 };
-}
+} // namespace adiscope
 
 #endif // POWER_CONTROLLER_API_HPP

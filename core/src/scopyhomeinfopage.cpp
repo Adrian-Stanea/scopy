@@ -1,16 +1,14 @@
 #include "scopyhomeinfopage.h"
+
 #include "ui_scopyhomeinfopage.h"
 
-ScopyHomeInfoPage::ScopyHomeInfoPage(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::ScopyHomeInfoPage)
+ScopyHomeInfoPage::ScopyHomeInfoPage(QWidget *parent)
+	: QWidget(parent)
+	, ui(new Ui::ScopyHomeInfoPage)
 {
-    ui->setupUi(this);
+	ui->setupUi(this);
 }
 
-ScopyHomeInfoPage::~ScopyHomeInfoPage()
-{
-    delete ui;
-}
+ScopyHomeInfoPage::~ScopyHomeInfoPage() { delete ui; }
 
 #include "moc_scopyhomeinfopage.cpp"

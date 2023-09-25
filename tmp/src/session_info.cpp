@@ -41,8 +41,8 @@ QString SessionInfo::getGitTag() const { return SCOPY_VERSION_GIT; }
 
 QString SessionInfo::getLastConnectedFirmware() const { return m_lastConnectedFirmware; }
 
-void SessionInfo::setLastConnectedFirmware(const QString& firmware) { m_lastConnectedFirmware = firmware; }
+void SessionInfo::setLastConnectedFirmware(const QString &firmware) { m_lastConnectedFirmware = firmware; }
 
 QString SessionInfo::getLastConnectedSerialNumber() const { return m_lastConnectedSerialNumber; }
 
-void SessionInfo::setLastConnectedSerialNumber(const QString& serial) { m_lastConnectedSerialNumber = serial; }
+void SessionInfo::setLastConnectedSerialNumber(const QString &serial) { m_lastConnectedSerialNumber = serial; }

@@ -3,7 +3,7 @@
 
 #include <QObject>
 
-namespace scopy::regmap{
+namespace scopy::regmap {
 class RegisterModel;
 
 namespace gui {
@@ -17,8 +17,7 @@ public:
 
 	RegisterSimpleWidget *buildWidget(RegisterModel *model);
 Q_SIGNALS:
-
 };
-}
-}
+} // namespace gui
+} // namespace scopy::regmap
 #endif // REGISTERSIMPLEWIDGETFACTORY_HPP

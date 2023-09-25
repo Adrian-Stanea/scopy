@@ -1,14 +1,16 @@
 #include "adcinstrument.h"
 
-#include <gui/widgets/toolbuttons.h>
-#include <gui/widgets/menucontrolbutton.h>
-#include <gui/widgets/verticalchannelmanager.h>
 #include <gui/widgets/measurementpanel.h>
+#include <gui/widgets/menucontrolbutton.h>
+#include <gui/widgets/toolbuttons.h>
+#include <gui/widgets/verticalchannelmanager.h>
 
 using namespace scopy;
 using namespace scopy::grutil;
 
-AdcInstrument::AdcInstrument(PlotProxy* proxy, QWidget *parent) : QWidget(parent), proxy(proxy)
+AdcInstrument::AdcInstrument(PlotProxy *proxy, QWidget *parent)
+	: QWidget(parent)
+	, proxy(proxy)
 {
 	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	QHBoxLayout *lay = new QHBoxLayout(this);
@@ -27,8 +29,8 @@ AdcInstrument::AdcInstrument(PlotProxy* proxy, QWidget *parent) : QWidget(parent
 	tool->setTopContainerHeight(90);
 	tool->setBottomContainerHeight(90);
 
-	openLastMenuBtn = new OpenLastMenuBtn(dynamic_cast<MenuHAnim*>(tool->rightContainer()),true,this);
-	rightMenuBtnGrp = dynamic_cast<OpenLastMenuBtn*>(openLastMenuBtn)->getButtonGroup();
+	openLastMenuBtn = new OpenLastMenuBtn(dynamic_cast<MenuHAnim *>(tool->rightContainer()), true, this);
+	rightMenuBtnGrp = dynamic_cast<OpenLastMenuBtn *>(openLastMenuBtn)->getButtonGroup();
 
 	tool->openBottomContainerHelper(false);
 	tool->openTopContainerHelper(false);
@@ -42,7 +44,6 @@ AdcInstrument::AdcInstrument(PlotProxy* proxy, QWidget *parent) : QWidget(parent
 	channelsBtn = new MenuControlButton(this);
 	setupChannelsButtonHelper(channelsBtn);
 
-
 	MenuControlButton *cursor = new MenuControlButton(this);
 	setupCursorButtonHelper(cursor);
 
@@ -54,26 +55,27 @@ AdcInstrument::AdcInstrument(PlotProxy* proxy, QWidget *parent) : QWidget(parent
 	stats_panel = new StatsPanel(this);
 	tool->bottomStack()->add(statsMenuId, stats_panel);
 
-	tool->addWidgetToTopContainerMenuControlHelper(openLastMenuBtn,TTA_RIGHT);
-	tool->addWidgetToTopContainerMenuControlHelper(settingsBtn,TTA_LEFT);
+	tool->addWidgetToTopContainerMenuControlHelper(openLastMenuBtn, TTA_RIGHT);
+	tool->addWidgetToTopContainerMenuControlHelper(settingsBtn, TTA_LEFT);
 
-	tool->addWidgetToTopContainerHelper(runBtn,TTA_RIGHT);
-	tool->addWidgetToTopContainerHelper(singleBtn,TTA_RIGHT);
+	tool->addWidgetToTopContainerHelper(runBtn, TTA_RIGHT);
+	tool->addWidgetToTopContainerHelper(singleBtn, TTA_RIGHT);
 
-	tool->addWidgetToTopContainerHelper(infoBtn,TTA_LEFT);
-	tool->addWidgetToTopContainerHelper(printBtn,TTA_LEFT);
+	tool->addWidgetToTopContainerHelper(infoBtn, TTA_LEFT);
+	tool->addWidgetToTopContainerHelper(printBtn, TTA_LEFT);
 
 	tool->addWidgetToBottomContainerHelper(channelsBtn, TTA_LEFT);
 
 	tool->addWidgetToBottomContainerHelper(cursor, TTA_RIGHT);
 	tool->addWidgetToBottomContainerHelper(measure, TTA_RIGHT);
 
-	connect(channelsBtn, &QPushButton::toggled, dynamic_cast<MenuHAnim*>(tool->leftContainer()), &MenuHAnim::toggleMenu);
+	connect(channelsBtn, &QPushButton::toggled, dynamic_cast<MenuHAnim *>(tool->leftContainer()),
+		&MenuHAnim::toggleMenu);
 
-	plotAddon = dynamic_cast<GRTimePlotAddon*>(proxy->getPlotAddon());
+	plotAddon = dynamic_cast<GRTimePlotAddon *>(proxy->getPlotAddon());
 	tool->addWidgetToCentralContainerHelper(plotAddon->getWidget());
 
-	plotAddonSettings = dynamic_cast<GRTimePlotAddonSettings*>(proxy->getPlotSettings());
+	plotAddonSettings = dynamic_cast<GRTimePlotAddonSettings *>(proxy->getPlotSettings());
 	rightMenuBtnGrp->addButton(settingsBtn);
 
 	QString settingsMenuId = plotAddonSettings->getName() + QString(uuid++);
@@ -87,8 +89,8 @@ AdcInstrument::AdcInstrument(PlotProxy* proxy, QWidget *parent) : QWidget(parent
 	tool->leftStack()->add(verticalChannelManagerId, vcm);
 
 	channelGroup = new QButtonGroup(this);
-	for(auto d: proxy->getDeviceAddons()) {
-		GRDeviceAddon *dev = dynamic_cast<GRDeviceAddon*>(d);
+	for(auto d : proxy->getDeviceAddons()) {
+		GRDeviceAddon *dev = dynamic_cast<GRDeviceAddon *>(d);
 		if(!dev)
 			return;
 		CollapsableMenuControlButton *devBtn = new CollapsableMenuControlButton(this);
@@ -104,7 +106,7 @@ AdcInstrument::AdcInstrument(PlotProxy* proxy, QWidget *parent) : QWidget(parent
 		});
 		vcm->add(devBtn);
 
-		for(GRTimeChannelAddon* ch : dev->getRegisteredChannels()) {
+		for(GRTimeChannelAddon *ch : dev->getRegisteredChannels()) {
 			MenuControlButton *btn = new MenuControlButton(devBtn);
 			devBtn->add(btn);
 			channelGroup->addButton(btn);
@@ -114,10 +116,11 @@ AdcInstrument::AdcInstrument(PlotProxy* proxy, QWidget *parent) : QWidget(parent
 
 			channelStack->add(id, ch->getWidget());
 
-			connect(btn, &QAbstractButton::clicked, this, [=](bool b){
+			connect(btn, &QAbstractButton::clicked, this, [=](bool b) {
 				if(b) {
 					if(!channelsBtn->button()->isChecked()) {
-						// Workaround because QButtonGroup and setChecked do not interact programatically
+						// Workaround because QButtonGroup and setChecked do not interact
+						// programatically
 						channelsBtn->button()->animateClick(1);
 					}
 
@@ -126,25 +129,26 @@ AdcInstrument::AdcInstrument(PlotProxy* proxy, QWidget *parent) : QWidget(parent
 				}
 			});
 
-			connect(ch,&GRTimeChannelAddon::enableMeasurement, measure_panel, &MeasurementsPanel::addMeasurement);
-			connect(ch,&GRTimeChannelAddon::disableMeasurement, measure_panel, &MeasurementsPanel::removeMeasurement);
-			connect(ch,&GRTimeChannelAddon::enableStat, stats_panel, &StatsPanel::addStat);
-			connect(ch,&GRTimeChannelAddon::disableStat, stats_panel, &StatsPanel::removeStat);
+			connect(ch, &GRTimeChannelAddon::enableMeasurement, measure_panel,
+				&MeasurementsPanel::addMeasurement);
+			connect(ch, &GRTimeChannelAddon::disableMeasurement, measure_panel,
+				&MeasurementsPanel::removeMeasurement);
+			connect(ch, &GRTimeChannelAddon::enableStat, stats_panel, &StatsPanel::addStat);
+			connect(ch, &GRTimeChannelAddon::disableStat, stats_panel, &StatsPanel::removeStat);
 
 			plotAddon->onChannelAdded(ch);
 			plotAddonSettings->onChannelAdded(ch);
-
 		}
 	}
 
-	connect(runBtn,&QPushButton::toggled, this, &AdcInstrument::setRunning);
-	connect(singleBtn,&QPushButton::toggled, plotAddon, &GRTimePlotAddon::setSingleShot);
-	connect(singleBtn,&QPushButton::toggled, this, &AdcInstrument::setRunning);
+	connect(runBtn, &QPushButton::toggled, this, &AdcInstrument::setRunning);
+	connect(singleBtn, &QPushButton::toggled, plotAddon, &GRTimePlotAddon::setSingleShot);
+	connect(singleBtn, &QPushButton::toggled, this, &AdcInstrument::setRunning);
 	connect(this, &AdcInstrument::runningChanged, this, &AdcInstrument::run);
 	connect(this, &AdcInstrument::runningChanged, runBtn, &QAbstractButton::setChecked);
 
 	connect(plotAddon, &GRTimePlotAddon::requestStop, this, &AdcInstrument::stop, Qt::QueuedConnection);
-	connect(cursor, &MenuControlButton::toggled, plotAddon,  &GRTimePlotAddon::showCursors);
+	connect(cursor, &MenuControlButton::toggled, plotAddon, &GRTimePlotAddon::showCursors);
 	connect(measure, &MenuControlButton::toggled, this, &AdcInstrument::showMeasurements);
 
 	channelStack->show("voltage02");
@@ -154,12 +158,10 @@ AdcInstrument::AdcInstrument(PlotProxy* proxy, QWidget *parent) : QWidget(parent
 	init();
 }
 
-AdcInstrument::~AdcInstrument()
-{
-	deinit();
-}
+AdcInstrument::~AdcInstrument() { deinit(); }
 
-void AdcInstrument::setupCursorButtonHelper(MenuControlButton *cursor) {
+void AdcInstrument::setupCursorButtonHelper(MenuControlButton *cursor)
+{
 	cursor->setName("Cursors");
 	cursor->setOpenMenuChecksThis(true);
 	cursor->setDoubleClickToOpenMenu(true);
@@ -167,13 +169,13 @@ void AdcInstrument::setupCursorButtonHelper(MenuControlButton *cursor) {
 	cursor->setCheckBoxStyle(MenuControlButton::CS_SQUARE);
 }
 
-void AdcInstrument::setupMeasureButtonHelper(MenuControlButton *measure) {
+void AdcInstrument::setupMeasureButtonHelper(MenuControlButton *measure)
+{
 	measure->setName("Measure");
 	measure->setOpenMenuChecksThis(true);
 	measure->setDoubleClickToOpenMenu(true);
 	measure->checkBox()->setVisible(false);
 }
-
 
 void AdcInstrument::setupDeviceMenuControlButtonHelper(MenuControlButton *devBtn, GRDeviceAddon *dev)
 {
@@ -184,7 +186,8 @@ void AdcInstrument::setupDeviceMenuControlButtonHelper(MenuControlButton *devBtn
 	devBtn->setDoubleClickToOpenMenu(true);
 }
 
-void AdcInstrument::setupChannelMenuControlButtonHelper(MenuControlButton *btn, GRTimeChannelAddon *ch) {
+void AdcInstrument::setupChannelMenuControlButtonHelper(MenuControlButton *btn, GRTimeChannelAddon *ch)
+{
 	btn->setName(ch->getName());
 	btn->setCheckBoxStyle(MenuControlButton::CS_CIRCLE);
 	btn->setOpenMenuChecksThis(true);
@@ -194,8 +197,11 @@ void AdcInstrument::setupChannelMenuControlButtonHelper(MenuControlButton *btn, 
 	btn->setCheckable(true);
 
 	connect(btn->checkBox(), &QCheckBox::toggled, this, [=](bool b) {
-		if(b) ch->enable(); else ch->disable();
-	} );
+		if(b)
+			ch->enable();
+		else
+			ch->disable();
+	});
 	btn->checkBox()->setChecked(true);
 }
 
@@ -207,15 +213,16 @@ void AdcInstrument::setupChannelsButtonHelper(MenuControlButton *channelsBtn)
 	channelsBtn->checkBox()->setVisible(false);
 	channelsBtn->setChecked(true);
 	channelStack = new MapStackedWidget(this);
-	tool->rightStack()->add(channelsMenuId,channelStack);
-	connect(channelsBtn->button(), &QAbstractButton::toggled, this, [=](bool b){
+	tool->rightStack()->add(channelsMenuId, channelStack);
+	connect(channelsBtn->button(), &QAbstractButton::toggled, this, [=](bool b) {
 		if(b)
 			tool->requestMenu(channelsMenuId);
 	});
 	rightMenuBtnGrp->addButton(channelsBtn->button());
 }
 
-void AdcInstrument::init() {
+void AdcInstrument::init()
+{
 	auto addons = proxy->getAddons();
 	proxy->init();
 	for(auto addon : addons) {
@@ -223,18 +230,20 @@ void AdcInstrument::init() {
 	}
 }
 
-void AdcInstrument::deinit() {
+void AdcInstrument::deinit()
+{
 	auto addons = proxy->getAddons();
 
 	for(auto addon : addons) {
-			addon->onDeinit();
+		addon->onDeinit();
 	}
 }
 
-void AdcInstrument::restart() {
+void AdcInstrument::restart()
+{
 	if(m_running) {
-			run(false);
-			run(true);
+		run(false);
+		run(true);
 	}
 }
 
@@ -248,44 +257,40 @@ void AdcInstrument::showMeasurements(bool b)
 	tool->openBottomContainerHelper(b);
 }
 
-bool AdcInstrument::running() const
-{
-	return m_running;
-}
+bool AdcInstrument::running() const { return m_running; }
 
 void AdcInstrument::setRunning(bool newRunning)
 {
-	if (m_running == newRunning)
-			return;
+	if(m_running == newRunning)
+		return;
 	m_running = newRunning;
 	Q_EMIT runningChanged(newRunning);
 }
 
-void AdcInstrument::start() {
-	run(true);
-}
+void AdcInstrument::start() { run(true); }
 
-void AdcInstrument::stop() {
-	run(false);
-}
+void AdcInstrument::stop() { run(false); }
 
-void AdcInstrument::startAddons() {
+void AdcInstrument::startAddons()
+{
 	auto addons = proxy->getAddons();
 
 	for(auto addon : addons) {
-			addon->onStart();
+		addon->onStart();
 	}
 }
-void AdcInstrument::stopAddons() {
+void AdcInstrument::stopAddons()
+{
 	auto addons = proxy->getAddons();
 
 	for(auto addon : addons) {
-			addon->onStop();
+		addon->onStop();
 	}
 }
 
-void AdcInstrument::run(bool b) {
-	qInfo()<<b;
+void AdcInstrument::run(bool b)
+{
+	qInfo() << b;
 	QElapsedTimer tim;
 	tim.start();
 
@@ -294,14 +299,9 @@ void AdcInstrument::run(bool b) {
 		singleBtn->setChecked(false);
 	}
 
-	if(b)  {
+	if(b) {
 		startAddons();
 	} else {
 		stopAddons();
 	}
 }
-
-
-
-
-

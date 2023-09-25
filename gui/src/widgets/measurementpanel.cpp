@@ -1,13 +1,15 @@
 #include "widgets/measurementpanel.h"
+
+#include <QGridLayout>
 #include <QScrollArea>
 #include <QWidget>
-#include <QGridLayout>
 
 using namespace scopy;
 
-MeasurementsPanel::MeasurementsPanel(QWidget *parent) : QWidget(parent)
+MeasurementsPanel::MeasurementsPanel(QWidget *parent)
+	: QWidget(parent)
 {
-	QVBoxLayout* lay = new QVBoxLayout(this);
+	QVBoxLayout *lay = new QVBoxLayout(this);
 	setLayout(lay);
 
 	QScrollBar *scrollBar = new QScrollBar(this);
@@ -39,10 +41,11 @@ MeasurementsPanel::MeasurementsPanel(QWidget *parent) : QWidget(parent)
 	lay->addWidget(scrollBar);
 	lay->addWidget(scrollArea);
 
-	connect(scrollArea->horizontalScrollBar(), &QAbstractSlider::rangeChanged, scrollBar, [=](double min, double max) {
-		auto singleStep = scrollArea->horizontalScrollBar()->singleStep();
-		scrollBar->setVisible(singleStep < (max-min));
-	});
+	connect(scrollArea->horizontalScrollBar(), &QAbstractSlider::rangeChanged, scrollBar,
+		[=](double min, double max) {
+			auto singleStep = scrollArea->horizontalScrollBar()->singleStep();
+			scrollBar->setVisible(singleStep < (max - min));
+		});
 
 	m_cursor = new QWidget(panel);
 	panelLayout->addWidget(m_cursor);
@@ -50,13 +53,13 @@ MeasurementsPanel::MeasurementsPanel(QWidget *parent) : QWidget(parent)
 	spacer = new QSpacerItem(10, 10, QSizePolicy::Expanding, QSizePolicy::Expanding);
 	panelLayout->addSpacerItem(spacer);
 
-	int idx = panelLayout->indexOf(spacer);	
+	int idx = panelLayout->indexOf(spacer);
 	m_stacks.append(new VerticalWidgetStack(this));
 	panelLayout->insertWidget(idx, m_stacks.last());
-
 }
 
-void MeasurementsPanel::addWidget(QWidget *meas) {
+void MeasurementsPanel::addWidget(QWidget *meas)
+{
 	if(m_stacks.last()->full()) {
 		m_stacks.append(new VerticalWidgetStack(this));
 		int idx = panelLayout->indexOf(spacer);
@@ -65,22 +68,23 @@ void MeasurementsPanel::addWidget(QWidget *meas) {
 	m_stacks.last()->addWidget(meas);
 }
 
-void MeasurementsPanel::addMeasurement(QWidget *meas) {
+void MeasurementsPanel::addMeasurement(QWidget *meas)
+{
 	addWidget(meas);
 	m_labels.append(meas);
 }
 
-void MeasurementsPanel::removeMeasurement(QWidget *meas) {
+void MeasurementsPanel::removeMeasurement(QWidget *meas)
+{
 	m_labels.removeAll(meas);
 	update();
 }
 
-void MeasurementsPanel::sort() {
-	update();
-}
+void MeasurementsPanel::sort() { update(); }
 
-void MeasurementsPanel::update() {
-	for(VerticalWidgetStack* stack : m_stacks) {
+void MeasurementsPanel::update()
+{
+	for(VerticalWidgetStack *stack : m_stacks) {
 		stack->reparentWidgets(nullptr);
 		panelLayout->removeWidget(stack);
 		delete stack;
@@ -94,18 +98,13 @@ void MeasurementsPanel::update() {
 	for(QWidget *label : m_labels) {
 		addWidget(label);
 	}
-
 }
 
-QWidget *MeasurementsPanel::cursorArea() {
-	return m_cursor;
-}
-
-
+QWidget *MeasurementsPanel::cursorArea() { return m_cursor; }
 
 StatsPanel::StatsPanel(QWidget *parent)
 {
-	QVBoxLayout* lay = new QVBoxLayout(this);
+	QVBoxLayout *lay = new QVBoxLayout(this);
 	setLayout(lay);
 
 	lay->setMargin(0);
@@ -127,10 +126,7 @@ StatsPanel::StatsPanel(QWidget *parent)
 	lay->addWidget(scrollArea);
 }
 
-StatsPanel::~StatsPanel()
-{
-
-}
+StatsPanel::~StatsPanel() {}
 
 void StatsPanel::addStat(QWidget *stat)
 {
@@ -144,11 +140,6 @@ void StatsPanel::removeStat(QWidget *stat)
 	panelLayout->removeWidget(stat);
 }
 
-void StatsPanel::clear()
-{
-}
+void StatsPanel::clear() {}
 
-void StatsPanel::sort()
-{
-
-}
+void StatsPanel::sort() {}

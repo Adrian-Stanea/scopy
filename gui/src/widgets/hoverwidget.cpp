@@ -1,12 +1,18 @@
 #include "widgets/hoverwidget.h"
+
 #include <QDebug>
 #include <QLoggingCategory>
 using namespace scopy;
 Q_LOGGING_CATEGORY(CAT_HOVERWIDGET, "HoverWidget")
 
 HoverWidget::HoverWidget(QWidget *content, QWidget *anchor, QWidget *parent)
-	: QWidget(parent), m_parent(parent), m_anchor(anchor), m_content(content),
-	m_anchorPos(HP_TOPLEFT), m_contentPos(HP_TOPRIGHT) {
+	: QWidget(parent)
+	, m_parent(parent)
+	, m_anchor(anchor)
+	, m_content(content)
+	, m_anchorPos(HP_TOPLEFT)
+	, m_contentPos(HP_TOPRIGHT)
+{
 
 	m_container = new QWidget(this);
 	m_container->setObjectName("container");
@@ -18,15 +24,15 @@ HoverWidget::HoverWidget(QWidget *content, QWidget *anchor, QWidget *parent)
 	m_container->setLayout(m_lay);
 	m_lay->addWidget(content);
 
-	if (m_content) {
+	if(m_content) {
 		setContent(m_content);
 		m_container->setMinimumSize(content->size());
 		setMinimumSize(content->size());
 	}
-	if (m_anchor) {
+	if(m_anchor) {
 		setAnchor(m_anchor);
 	}
-	if (m_parent) {
+	if(m_parent) {
 		setParent(m_parent);
 	}
 
@@ -35,7 +41,7 @@ HoverWidget::HoverWidget(QWidget *content, QWidget *anchor, QWidget *parent)
 
 void HoverWidget::setContent(QWidget *content)
 {
-	if (m_content) {
+	if(m_content) {
 		m_lay->removeWidget(m_content);
 		m_content->setParent(nullptr);
 		m_content->removeEventFilter(this);
@@ -49,12 +55,11 @@ void HoverWidget::setContent(QWidget *content)
 
 	m_content->installEventFilter(this);
 	moveToAnchor();
-
 }
 
 void HoverWidget::setAnchor(QWidget *anchor)
 {
-	if (m_anchor) {
+	if(m_anchor) {
 		m_anchor->removeEventFilter(this);
 	}
 
@@ -65,7 +70,7 @@ void HoverWidget::setAnchor(QWidget *anchor)
 
 void HoverWidget::setParent(QWidget *parent)
 {
-	if (m_parent) {
+	if(m_parent) {
 		m_parent->removeEventFilter(this);
 	}
 
@@ -77,10 +82,7 @@ void HoverWidget::setParent(QWidget *parent)
 	setVisible(visible);
 }
 
-HoverWidget::~HoverWidget()
-{
-
-}
+HoverWidget::~HoverWidget() {}
 
 bool HoverWidget::eventFilter(QObject *watched, QEvent *event)
 {
@@ -98,20 +100,15 @@ bool HoverWidget::eventFilter(QObject *watched, QEvent *event)
 	return QObject::eventFilter(watched, event);
 }
 
-QPoint HoverWidget::getAnchorOffset()
-{
-	return m_anchorOffset;
-}
+QPoint HoverWidget::getAnchorOffset() { return m_anchorOffset; }
 
-void HoverWidget::setAnchorOffset(QPoint pt) {
+void HoverWidget::setAnchorOffset(QPoint pt)
+{
 	m_anchorOffset = pt;
 	moveToAnchor();
 }
 
-HoverPosition HoverWidget::getAnchorPos()
-{
-	return m_anchorPos;
-}
+HoverPosition HoverWidget::getAnchorPos() { return m_anchorPos; }
 
 void HoverWidget::setAnchorPos(HoverPosition pos)
 {
@@ -119,10 +116,7 @@ void HoverWidget::setAnchorPos(HoverPosition pos)
 	moveToAnchor();
 }
 
-HoverPosition HoverWidget::getContentPos()
-{
-	return m_contentPos;
-}
+HoverPosition HoverWidget::getContentPos() { return m_contentPos; }
 
 void HoverWidget::setContentPos(HoverPosition pos)
 {
@@ -132,27 +126,28 @@ void HoverWidget::setContentPos(HoverPosition pos)
 
 void HoverWidget::moveToAnchor()
 {
-	if (!m_content) return;
-	QPoint global = m_anchor->mapToGlobal(QPoint(0,0));
-	QPoint mappedPoint =  m_parent->mapFromGlobal(global);
-	QPoint anchorPosition = QPoint(0,0);
-	QPoint contentPosition = QPoint(0,0);
+	if(!m_content)
+		return;
+	QPoint global = m_anchor->mapToGlobal(QPoint(0, 0));
+	QPoint mappedPoint = m_parent->mapFromGlobal(global);
+	QPoint anchorPosition = QPoint(0, 0);
+	QPoint contentPosition = QPoint(0, 0);
 
-	switch (m_anchorPos) {
+	switch(m_anchorPos) {
 	case HP_LEFT:
-		anchorPosition = QPoint(0 , m_anchor->height() / 2);
+		anchorPosition = QPoint(0, m_anchor->height() / 2);
 		break;
 	case HP_TOPLEFT:
-		anchorPosition = QPoint(0,0);
+		anchorPosition = QPoint(0, 0);
 		break;
 	case HP_TOP:
-		anchorPosition = QPoint(m_anchor->width() / 2 , 0);
+		anchorPosition = QPoint(m_anchor->width() / 2, 0);
 		break;
 	case HP_TOPRIGHT:
 		anchorPosition = QPoint(m_anchor->width(), 0);
 		break;
 	case HP_RIGHT:
-		anchorPosition = QPoint(m_anchor->width(), m_anchor->height()/2);
+		anchorPosition = QPoint(m_anchor->width(), m_anchor->height() / 2);
 		break;
 	case HP_BOTTOMRIGHT:
 		anchorPosition = QPoint(m_anchor->width(), m_anchor->height());
@@ -164,49 +159,50 @@ void HoverWidget::moveToAnchor()
 		anchorPosition = QPoint(0, m_anchor->height());
 		break;
 	case HP_CENTER:
-		anchorPosition = QPoint(m_anchor->width() / 2, m_anchor->height()/2);
+		anchorPosition = QPoint(m_anchor->width() / 2, m_anchor->height() / 2);
 		break;
 	default:
-		anchorPosition = QPoint(0,0);
+		anchorPosition = QPoint(0, 0);
 		break;
 	}
 
-	switch (m_contentPos) {
+	switch(m_contentPos) {
 	case HP_LEFT:
-		contentPosition = QPoint(-m_content->width(), -m_content->height()/2);
+		contentPosition = QPoint(-m_content->width(), -m_content->height() / 2);
 		break;
 	case HP_TOPLEFT:
 		contentPosition = QPoint(-m_content->width(), -m_content->height());
 		break;
 	case HP_TOP:
-		contentPosition = QPoint(-m_content->width()/2, -m_content->height());
+		contentPosition = QPoint(-m_content->width() / 2, -m_content->height());
 		break;
 	case HP_TOPRIGHT:
 		contentPosition = QPoint(0, -m_content->height());
 		break;
 	case HP_RIGHT:
-		contentPosition = QPoint(0, -m_content->height()/2);
+		contentPosition = QPoint(0, -m_content->height() / 2);
 		break;
 	case HP_BOTTOMRIGHT:
 		contentPosition = QPoint(0, 0);
 		break;
 	case HP_BOTTOM:
-		contentPosition = QPoint(-m_content->width()/2, 0);
+		contentPosition = QPoint(-m_content->width() / 2, 0);
 		break;
 	case HP_BOTTOMLEFT:
 		contentPosition = QPoint(-m_content->width(), 0);
 		break;
 	case HP_CENTER:
-		contentPosition = QPoint(-m_content->width()/2, -m_content->height()/2);
+		contentPosition = QPoint(-m_content->width() / 2, -m_content->height() / 2);
 		break;
 
 	default:
-		contentPosition = QPoint(0,0);
+		contentPosition = QPoint(0, 0);
 		break;
 	}
 
-	qDebug(CAT_HOVERWIDGET)<<"moveAnchor"<<"mapped"<<mappedPoint<<"contentPosition"<<contentPosition<<
-		"anchorPosition"<<anchorPosition<<"offset"<<m_anchorOffset;
+	qDebug(CAT_HOVERWIDGET) << "moveAnchor"
+				<< "mapped" << mappedPoint << "contentPosition" << contentPosition << "anchorPosition"
+				<< anchorPosition << "offset" << m_anchorOffset;
 	move(mappedPoint + contentPosition + anchorPosition + m_anchorOffset);
 }
 

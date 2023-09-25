@@ -1,19 +1,19 @@
 #include "deviceloader.h"
+
 #include <QThread>
 
 using namespace scopy;
 
-DeviceLoader::DeviceLoader(DeviceImpl* d, QObject *parent) : d(d), QObject(parent)
+DeviceLoader::DeviceLoader(DeviceImpl *d, QObject *parent)
+	: d(d)
+	, QObject(parent)
 {
-
 }
 
-DeviceLoader::~DeviceLoader()
+DeviceLoader::~DeviceLoader() {}
+
+void DeviceLoader::init(bool async)
 {
-
-}
-
-void DeviceLoader::init(bool async) {
 	if(async) {
 		asyncInit();
 	} else {
@@ -23,7 +23,7 @@ void DeviceLoader::init(bool async) {
 
 void DeviceLoader::asyncInit()
 {
-	QThread *th = QThread::create([=]{
+	QThread *th = QThread::create([=] {
 		// initializer thread
 		d->init();
 	});
@@ -31,18 +31,23 @@ void DeviceLoader::asyncInit()
 	d->setParent(nullptr);
 	d->moveToThread(th);
 
-	connect(th,&QThread::destroyed, this,[=]() {;
+	connect(
+		th, &QThread::destroyed, this,
+		[=]() {
+			;
 			// back to main thread
 			d->moveToThread(QThread::currentThread());
 			d->setParent(oldParent);
 			Q_EMIT initialized();
-		}, Qt::QueuedConnection);
-	connect(th,&QThread::finished, th, &QThread::deleteLater);
+		},
+		Qt::QueuedConnection);
+	connect(th, &QThread::finished, th, &QThread::deleteLater);
 
 	th->start();
 }
 
-void DeviceLoader::syncInit() {
+void DeviceLoader::syncInit()
+{
 	d->init();
 	Q_EMIT initialized();
 }

@@ -3,8 +3,8 @@
 
 #include "bitfieldoption.hpp"
 
-#include <QWidget>
 #include <QFrame>
+#include <QWidget>
 
 class QLabel;
 class QLineEdit;
@@ -12,22 +12,16 @@ class QCheckBox;
 class QComboBox;
 class QVBoxLayout;
 
-namespace scopy::regmap{
-namespace gui{
+namespace scopy::regmap {
+namespace gui {
 class BitFieldDetailedWidget : public QFrame
 {
 	Q_OBJECT
 public:
-    explicit BitFieldDetailedWidget(QString name,
-                                    QString access,
-                                    int defaultValue,
-                                    QString description,
-                                    int width,
-                                    QString notes,
-                                    int regOffset,
-                                    QVector<BitFieldOption*> *options,
-                                    QWidget *parent = nullptr);
-    ~BitFieldDetailedWidget();
+	explicit BitFieldDetailedWidget(QString name, QString access, int defaultValue, QString description, int width,
+					QString notes, int regOffset, QVector<BitFieldOption *> *options,
+					QWidget *parent = nullptr);
+	~BitFieldDetailedWidget();
 
 	QString getToolTip() const;
 	void updateValue(QString newValue);
@@ -44,9 +38,9 @@ private:
 	QString description;
 	bool reserved;
 	int regOffset;
-    QString access;
+	QString access;
 
-    QVector<BitFieldOption*> *options;
+	QVector<BitFieldOption *> *options;
 	QLabel *value;
 	QComboBox *valueComboBox = nullptr;
 	QCheckBox *valueCheckBox = nullptr;
@@ -55,9 +49,8 @@ private:
 	void firstRead();
 
 Q_SIGNALS:
-    void valueUpdated(QString value);
-
+	void valueUpdated(QString value);
 };
-}
-}
+} // namespace gui
+} // namespace scopy::regmap
 #endif // BitFieldDetailedWidget_HPP

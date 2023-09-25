@@ -18,39 +18,42 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "config.h"
+#include "scopyApplication.hpp"
+#include "tool_launcher.hpp"
+
 #include <QApplication>
 #include <QCommandLineParser>
-#include <QSettings>
-#include <QtGlobal>
-#include <QStyleFactory>
-#include <QProcess>
-#include <QDir>
 #include <QDateTime>
+#include <QDir>
 #include <QFontDatabase>
-#include <QTranslator>
 #include <QLocale>
-#include "config.h"
-#include "tool_launcher.hpp"
-#include "scopyApplication.hpp"
+#include <QProcess>
+#include <QSettings>
+#include <QStyleFactory>
+#include <QTranslator>
+#include <QtGlobal>
+
 #include <stdio.h>
 #ifdef LIBM2K_ENABLE_LOG
 #include <glog/logging.h>
 #endif
 
 //#include "coloreditor.h"
-#include "scopy_color_editor.h"
 #include "application_restarter.h"
+#include "scopy_color_editor.h"
 
 #ifdef __ANDROID__
-	#include <QtAndroidExtras/QtAndroid>
+#include <QtAndroidExtras/QtAndroid>
 #endif
 
 using namespace adiscope;
 
 int main(int argc, char **argv)
 {
-#ifdef  __ANDROID__
-	QAndroidJniObject jniObject = QtAndroid::androidActivity().callObjectMethod("getScaleFactor", "()Ljava/lang/String;");
+#ifdef __ANDROID__
+	QAndroidJniObject jniObject =
+		QtAndroid::androidActivity().callObjectMethod("getScaleFactor", "()Ljava/lang/String;");
 	QString scaleFactor = jniObject.toString();
 
 	qputenv("QT_SCALE_FACTOR", scaleFactor.toUtf8());
@@ -62,7 +65,7 @@ int main(int argc, char **argv)
 	QApplication::setAttribute(Qt::AA_CompressTabletEvents, true);
 	qputenv("SCOPY_USE_OPEN_GL", "1");
 #endif
-	QApplication::setAttribute(Qt::AA_ShareOpenGLContexts,true);
+	QApplication::setAttribute(Qt::AA_ShareOpenGLContexts, true);
 
 	ScopyApplication app(argc, argv);
 	app.setStyle(QStyleFactory::create("Fusion"));
@@ -80,14 +83,9 @@ int main(int argc, char **argv)
 #endif
 
 #ifdef Q_OS_WIN
-	google_breakpad::ExceptionHandler eh(L"C:/dumps/",
-					     NULL,
-					     ScopyApplication::dumpCallback,
-					     NULL,
-					     google_breakpad::ExceptionHandler::HANDLER_ALL,
-					     MiniDumpNormal,
-					     (wchar_t*)NULL,
-					     NULL);
+	google_breakpad::ExceptionHandler eh(L"C:/dumps/", NULL, ScopyApplication::dumpCallback, NULL,
+					     google_breakpad::ExceptionHandler::HANDLER_ALL, MiniDumpNormal,
+					     (wchar_t *)NULL, NULL);
 #endif
 	app.setExceptionHandler(&eh);
 #endif
@@ -130,20 +128,19 @@ int main(int argc, char **argv)
 	QString prevCrashDump = "";
 #endif
 
-
 	QCommandLineParser parser;
 
 	parser.addHelpOption();
 	parser.addVersionOption();
 
 	parser.addOptions({
-					{ {"s", "script"}, "Run given script.", "script" },
-					{ {"n", "nogui"}, "Run Scopy without GUI" },
-					{ {"d", "nodecoders"}, "Run Scopy without digital decoders"},
-					{ {"nd", "nonativedialog"}, "Run Scopy without native file dialogs"},
-					{ {"og", "opengl"}, "Force use OpenGL for plots"} ,
-					{ {"nog", "noopengl"}, "Force software rendering for plots"} ,
-			  });
+		{{"s", "script"}, "Run given script.", "script"},
+		{{"n", "nogui"}, "Run Scopy without GUI"},
+		{{"d", "nodecoders"}, "Run Scopy without digital decoders"},
+		{{"nd", "nonativedialog"}, "Run Scopy without native file dialogs"},
+		{{"og", "opengl"}, "Force use OpenGL for plots"},
+		{{"nog", "noopengl"}, "Force software rendering for plots"},
+	});
 
 	parser.process(app);
 
@@ -160,11 +157,13 @@ int main(int argc, char **argv)
 	QString osLanguage = QLocale::system().name().split("_")[0];
 
 	QDir directory(":/translations");
-	QStringList languages = directory.entryList(QStringList() << "*.qm" << "*.QM", QDir::Files);
+	QStringList languages = directory.entryList(QStringList() << "*.qm"
+								  << "*.QM",
+						    QDir::Files);
 
-	if(languages.contains(language+".qm")) {
+	if(languages.contains(language + ".qm")) {
 		// use one of the precompiled languages - no .qm extension
-		languageFileName += language+".qm";
+		languageFileName += language + ".qm";
 	} else if(language == "auto") {
 		// use auto from precompiled languages using the system locale
 		languageFileName += osLanguage + ".qm";
@@ -184,21 +183,21 @@ int main(int argc, char **argv)
 	colorEditor->setUserStylesheets(userStylesheets);
 	colorEditor->setCurrentStylesheet(currentStylesheet);
 
-	if (app.styleSheet().isEmpty()) {
+	if(app.styleSheet().isEmpty()) {
 		app.setStyleSheet(colorEditor->getStyleSheet());
 	}
 
 	bool openGl = parser.isSet("opengl");
 	bool noOpenGl = parser.isSet("noopengl");
 	if(openGl && noOpenGl) {
-		qDebug()<<"Ambigous openGL parameters";
+		qDebug() << "Ambigous openGL parameters";
 		return -1;
 	}
 	if(openGl) {
-		qputenv("SCOPY_USE_OPENGL","1");
+		qputenv("SCOPY_USE_OPENGL", "1");
 	}
 	if(noOpenGl) {
-		qputenv("SCOPY_USE_OPENGL","0");
+		qputenv("SCOPY_USE_OPENGL", "0");
 	}
 
 	ToolLauncher launcher(prevCrashDump);
@@ -206,26 +205,26 @@ int main(int argc, char **argv)
 
 	bool nogui = parser.isSet("nogui");
 	bool nodecoders = parser.isSet("nodecoders");
-	if (nodecoders) {
+	if(nodecoders) {
 		launcher.setUseDecoders(false);
 	}
 
 	bool nonativedialog = parser.isSet("nonativedialog");
 #ifdef NONATIVE
-    nonativedialog = true;
+	nonativedialog = true;
 #endif
 	qDebug() << "Using" << (nonativedialog ? "Qt" : "Native") << "file dialogs";
 	launcher.setNativeDialogs(!nonativedialog);
 
 	QString script = parser.value("script");
-	if (nogui) {
+	if(nogui) {
 		launcher.hide();
 	} else {
 		launcher.show();
 	}
-	if (!script.isEmpty()) {
+	if(!script.isEmpty()) {
 		QFile file(script);
-		if (!file.open(QFile::ReadOnly)) {
+		if(!file.open(QFile::ReadOnly)) {
 			qCritical() << "Unable to open script file";
 			return EXIT_FAILURE;
 		}
@@ -233,18 +232,14 @@ int main(int argc, char **argv)
 		QTextStream stream(&file);
 
 		QString firstLine = stream.readLine();
-		if (!firstLine.startsWith("#!"))
+		if(!firstLine.startsWith("#!"))
 			stream.seek(0);
 
 		QString contents = stream.readAll();
 		file.close();
 
-		QMetaObject::invokeMethod(&launcher,
-					  "runProgram",
-					  Qt::QueuedConnection,
-					  Q_ARG(QString, contents),
+		QMetaObject::invokeMethod(&launcher, "runProgram", Qt::QueuedConnection, Q_ARG(QString, contents),
 					  Q_ARG(QString, script));
 	}
 	return restarter.restart(app.exec());
 }
-

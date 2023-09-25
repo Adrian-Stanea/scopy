@@ -17,49 +17,46 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#include <QApplication>
 #include "scopyApplication.hpp"
 
-#include <QDir>
-#include <QFileInfo>
+#include <QApplication>
 #include <QDateTime>
 #include <QDebug>
+#include <QDir>
+#include <QFileInfo>
 
-bool ScopyApplication::getDebugMode() const
+bool ScopyApplication::getDebugMode() const { return debugMode; }
+
+void ScopyApplication::setDebugMode(bool value) { debugMode = value; }
+
+ScopyApplication::ScopyApplication(int &argc, char **argv)
+	: QApplication(argc, argv)
+	, debugMode(false)
 {
-	return debugMode;
 }
-
-void ScopyApplication::setDebugMode(bool value)
-{
-	debugMode = value;
-}
-
-ScopyApplication::ScopyApplication(int& argc, char** argv) : QApplication(argc, argv), debugMode(false) {}
 
 #if BREAKPAD_HANDLER
 using namespace google_breakpad;
-QString ScopyApplication::initBreakPadHandler(QString crashDumpPath) {
-	QString prevCrashDump="";
+QString ScopyApplication::initBreakPadHandler(QString crashDumpPath)
+{
+	QString prevCrashDump = "";
 	QString appDir = crashDumpPath;
 	QDir qd(appDir);
 	if(qd.exists()) {
 		qd.mkdir("crashdmp");
 	}
 	qd.cd("crashdmp");
-	QStringList dumps= qd.entryList();
-	for(QString dump : dumps)
-	{
-		if(dump=="." || dump == "..") continue;
+	QStringList dumps = qd.entryList();
+	for(QString dump : dumps) {
+		if(dump == "." || dump == "..")
+			continue;
 		if(dump.startsWith("ScopyCrashDump"))
 			continue;
-		QString dumpFullPath = qd.path()+qd.separator()+dump;
+		QString dumpFullPath = qd.path() + qd.separator() + dump;
 		QFileInfo fi(dumpFullPath);
-		QString dumpDateAndTime = fi.lastModified().toString(Qt::ISODate).replace("T","--").replace(":","-");
-		prevCrashDump = qd.path()+qd.separator()+"ScopyCrashDump--"+dumpDateAndTime+".dmp";
+		QString dumpDateAndTime = fi.lastModified().toString(Qt::ISODate).replace("T", "--").replace(":", "-");
+		prevCrashDump = qd.path() + qd.separator() + "ScopyCrashDump--" + dumpDateAndTime + ".dmp";
 		QFile::rename(dumpFullPath, prevCrashDump);
-
-
 	}
 
 #ifdef Q_OS_LINUX
@@ -80,12 +77,13 @@ ScopyApplication::~ScopyApplication()
 }
 
 #ifdef CATCH_UNHANDLED_EXCEPTIONS
-bool ScopyApplication::notify(QObject *receiver, QEvent *e) {
+bool ScopyApplication::notify(QObject *receiver, QEvent *e)
+{
 
 	try {
 		return QApplication::notify(receiver, e);
 		// Handle the desired exception type
-	} catch (...) {
+	} catch(...) {
 		// Handle the rest
 		handler->WriteMinidump();
 		std::terminate();
@@ -95,33 +93,23 @@ bool ScopyApplication::notify(QObject *receiver, QEvent *e) {
 #endif
 
 #ifdef Q_OS_WIN
-bool ScopyApplication::dumpCallback(const wchar_t* dump_path,
-							const wchar_t* minidump_id,
-							void* context,
-							EXCEPTION_POINTERS* exinfo,
-							MDRawAssertionInfo* assertion,
-							bool succeeded) {
-	printf("Dump path: %s\n",dump_path);
+bool ScopyApplication::dumpCallback(const wchar_t *dump_path, const wchar_t *minidump_id, void *context,
+				    EXCEPTION_POINTERS *exinfo, MDRawAssertionInfo *assertion, bool succeeded)
+{
+	printf("Dump path: %s\n", dump_path);
 	return succeeded;
 }
 #endif
-ExceptionHandler *ScopyApplication::getExceptionHandler() const
-{
-	return handler;
-}
+ExceptionHandler *ScopyApplication::getExceptionHandler() const { return handler; }
 
-void ScopyApplication::setExceptionHandler(ExceptionHandler *value)
-{
-	handler = value;
-}
-
+void ScopyApplication::setExceptionHandler(ExceptionHandler *value) { handler = value; }
 
 #ifdef Q_OS_LINUX
-bool ScopyApplication::dumpCallback(const google_breakpad::MinidumpDescriptor& descriptor,
-						 void* context, bool succeeded) {
+bool ScopyApplication::dumpCallback(const google_breakpad::MinidumpDescriptor &descriptor, void *context,
+				    bool succeeded)
+{
 	printf("Dump path: %s\n", descriptor.path());
 	return succeeded;
 }
 #endif
 #endif
-

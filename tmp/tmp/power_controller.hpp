@@ -21,27 +21,28 @@
 #ifndef POWER_CONTROLLER_HPP
 #define POWER_CONTROLLER_HPP
 
-#include <QPushButton>
-#include <QTimer>
-
 #include "apiObject.hpp"
 #include "gui/spinbox_a.hpp"
 #include "tool.hpp"
 
-extern "C" {
+#include <QPushButton>
+#include <QTimer>
+
+extern "C"
+{
 	struct iio_context;
 }
 
 namespace libm2k {
 namespace context {
-	class M2k;
+class M2k;
 }
 namespace analog {
-	class M2kPowerSupply;
+class M2kPowerSupply;
 }
-}
+} // namespace libm2k
 namespace Ui {
-	class PowerController;
+class PowerController;
 }
 
 class QJSEngine;
@@ -49,55 +50,54 @@ class QShowEvent;
 class QHideEvent;
 
 namespace adiscope {
-	class PowerController_API;
+class PowerController_API;
 
-	class PowerController : public Tool
-	{
-		friend class PowerController_API;
-		friend class ToolLauncher_API;
+class PowerController : public Tool
+{
+	friend class PowerController_API;
+	friend class ToolLauncher_API;
 
-		Q_OBJECT
+	Q_OBJECT
 
-	public:
-		const int AVERAGE_COUNT = 5;
+public:
+	const int AVERAGE_COUNT = 5;
 
-		explicit PowerController(struct iio_context *ctx,
-				ToolMenuItem *toolMenuItem, QJSEngine *engine,
-				ToolLauncher *parent = 0);
-		~PowerController();
+	explicit PowerController(struct iio_context *ctx, ToolMenuItem *toolMenuItem, QJSEngine *engine,
+				 ToolLauncher *parent = 0);
+	~PowerController();
 
-	public Q_SLOTS:
-		void dac1_set_enabled(bool enabled);
-		void dac2_set_enabled(bool enabled);
-		void dac1_set_value(double value);
-		void dac2_set_value(double value);
-		void update_lcd();
-		void sync_enabled(bool enabled);
-		void run() override;
-		void stop() override;
+public Q_SLOTS:
+	void dac1_set_enabled(bool enabled);
+	void dac2_set_enabled(bool enabled);
+	void dac1_set_value(double value);
+	void dac2_set_value(double value);
+	void update_lcd();
+	void sync_enabled(bool enabled);
+	void run() override;
+	void stop() override;
 
-	private Q_SLOTS:
-		void startStop(bool start);
-		void ratioChanged(int percent);
-		void toggleRunButton(bool enabled);
-		void readPreferences();
+private Q_SLOTS:
+	void startStop(bool start);
+	void ratioChanged(int percent);
+	void toggleRunButton(bool enabled);
+	void readPreferences();
 
-	private:
-		Ui::PowerController *ui;
-		PositionSpinButton *valuePos;
-		PositionSpinButton *valueNeg;
-		QTimer timer;
-		bool in_sync;
-		QList<double> averageVoltageCh1;
-		QList<double> averageVoltageCh2;
-		libm2k::context::M2k* m_m2k_context;
-		libm2k::analog::M2kPowerSupply* m_m2k_powersupply;
+private:
+	Ui::PowerController *ui;
+	PositionSpinButton *valuePos;
+	PositionSpinButton *valueNeg;
+	QTimer timer;
+	bool in_sync;
+	QList<double> averageVoltageCh1;
+	QList<double> averageVoltageCh2;
+	libm2k::context::M2k *m_m2k_context;
+	libm2k::analog::M2kPowerSupply *m_m2k_powersupply;
 
-		void showEvent(QShowEvent *event);
-		void hideEvent(QHideEvent *event);
+	void showEvent(QShowEvent *event);
+	void hideEvent(QHideEvent *event);
 
-	Q_SIGNALS:
-		void showTool();
-	};
-}
+Q_SIGNALS:
+	void showTool();
+};
+} // namespace adiscope
 #endif /* POWER_CONTROLLER_HPP */

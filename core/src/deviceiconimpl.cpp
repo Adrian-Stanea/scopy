@@ -1,10 +1,13 @@
 #include "deviceiconimpl.h"
-#include <QLabel>
-#include <QVBoxLayout>
-#include <QDebug>
-#include <QPushButton>
+
 #include "gui/dynamicWidget.h"
+
 #include "ui_devicebutton.h"
+
+#include <QDebug>
+#include <QLabel>
+#include <QPushButton>
+#include <QVBoxLayout>
 
 using namespace scopy;
 DeviceIconImpl::DeviceIconImpl(Device *d, QWidget *parent)
@@ -15,12 +18,13 @@ DeviceIconImpl::DeviceIconImpl(Device *d, QWidget *parent)
 	ui->description->setText(d->displayParam());
 	ui->name->setText(d->displayName());
 	ui->iconPlaceHolder->layout()->addWidget(d->icon());
-	ui->iconPlaceHolder->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding );
+	ui->iconPlaceHolder->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
 	setCheckable(true);
 }
 
-void DeviceIconImpl::setConnected(bool val) {
+void DeviceIconImpl::setConnected(bool val)
+{
 	setDynamicProperty(ui->line, "connected", val);
 	//	ensurePolished();
 }

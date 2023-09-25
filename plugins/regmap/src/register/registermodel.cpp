@@ -1,50 +1,31 @@
-#include "bitfield/bitfieldmodel.hpp"
 #include "registermodel.hpp"
+
+#include "bitfield/bitfieldmodel.hpp"
 
 using namespace scopy::regmap;
 
 RegisterModel::RegisterModel(QString name, uint32_t address, QString description, bool exists, int width, QString notes,
-			     QVector<BitFieldModel *> *bitFields):
-	name(name),
-	address(address),
-	description(description),
-	exists(exists),
-	width(width),
-	notes(notes),
-	bitFields(bitFields)
-{}
-
-QString RegisterModel::getName() const
+			     QVector<BitFieldModel *> *bitFields)
+	: name(name)
+	, address(address)
+	, description(description)
+	, exists(exists)
+	, width(width)
+	, notes(notes)
+	, bitFields(bitFields)
 {
-	return name;
 }
 
-uint32_t RegisterModel::getAddress() const
-{
-	return address;
-}
+QString RegisterModel::getName() const { return name; }
 
-QString RegisterModel::getDescription() const
-{
-	return description;
-}
+uint32_t RegisterModel::getAddress() const { return address; }
 
-bool RegisterModel::getExists() const
-{
-	return exists;
-}
+QString RegisterModel::getDescription() const { return description; }
 
-int RegisterModel::getWidth() const
-{
-	return width;
-}
+bool RegisterModel::getExists() const { return exists; }
 
-QString RegisterModel::getNotes() const
-{
-	return notes;
-}
+int RegisterModel::getWidth() const { return width; }
 
-QVector<BitFieldModel *> *RegisterModel::getBitFields() const
-{
-	return bitFields;
-}
+QString RegisterModel::getNotes() const { return notes; }
+
+QVector<BitFieldModel *> *RegisterModel::getBitFields() const { return bitFields; }

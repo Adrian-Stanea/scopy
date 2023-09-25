@@ -18,22 +18,24 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "utils.h"
 #include "debugger.h"
+
+#include "utils.h"
+
 #include "ui_debugger.h"
+
 #include <QDebug>
 #include <QFileDialog>
-
 
 using namespace adiscope;
 using namespace std;
 
-Debugger::Debugger(struct iio_context *ctx, Filter *filt,
-		   ToolMenuItem *toolMenuItem, QJSEngine *engine,
-                   ToolLauncher *parent) :
-	Tool(ctx, toolMenuItem, nullptr, "Debug", parent),
-	ui(new Ui::Debugger), filter(filt),
-	eng(engine)
+Debugger::Debugger(struct iio_context *ctx, Filter *filt, ToolMenuItem *toolMenuItem, QJSEngine *engine,
+		   ToolLauncher *parent)
+	: Tool(ctx, toolMenuItem, nullptr, "Debug", parent)
+	, ui(new Ui::Debugger)
+	, filter(filt)
+	, eng(engine)
 {
 	ui->setupUi(this);
 	debug.setIioContext(ctx);
@@ -53,39 +55,24 @@ Debugger::Debugger(struct iio_context *ctx, Filter *filt,
 	this->updateFilename(ui->AttributeComboBox->currentIndex());
 	on_ReadButton_clicked();
 
-	QObject::connect(ui->DevicecomboBox, &QComboBox::currentTextChanged,this,
-	                 &Debugger::updateChannelComboBox);
-	QObject::connect(ui->ChannelComboBox, &QComboBox::currentTextChanged, this,
-	                 &Debugger::updateAttributeComboBox);
-	QObject::connect(ui->AttributeComboBox, SIGNAL(currentIndexChanged(int)), this,
-	                 SLOT(updateFilename(int)));
-	QObject::connect(ui->AttributeComboBox, &QComboBox::currentTextChanged, this,
-	                 &Debugger::updateValueWidget);
-	QObject::connect(ui->DevicecomboBox, &QComboBox::currentTextChanged, this,
-	                 &Debugger::updateSources);
+	QObject::connect(ui->DevicecomboBox, &QComboBox::currentTextChanged, this, &Debugger::updateChannelComboBox);
+	QObject::connect(ui->ChannelComboBox, &QComboBox::currentTextChanged, this, &Debugger::updateAttributeComboBox);
+	QObject::connect(ui->AttributeComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateFilename(int)));
+	QObject::connect(ui->AttributeComboBox, &QComboBox::currentTextChanged, this, &Debugger::updateValueWidget);
+	QObject::connect(ui->DevicecomboBox, &QComboBox::currentTextChanged, this, &Debugger::updateSources);
 
-	QObject::connect(ui->addressSpinBox, SIGNAL(valueChanged(int)), this,
-	                 SLOT(updateRegMap()));
+	QObject::connect(ui->addressSpinBox, SIGNAL(valueChanged(int)), this, SLOT(updateRegMap()));
 
-	QObject::connect(ui->valueSpinBox, SIGNAL(valueChanged(int)), this->reg,
-	                 SLOT(setValue(int)));
-	QObject::connect(this->reg, SIGNAL(valueChanged(int)), ui->valueSpinBox,
-	                 SLOT(setValue(int)));
+	QObject::connect(ui->valueSpinBox, SIGNAL(valueChanged(int)), this->reg, SLOT(setValue(int)));
+	QObject::connect(this->reg, SIGNAL(valueChanged(int)), ui->valueSpinBox, SLOT(setValue(int)));
 
-	QObject::connect(ui->DevicecomboBox, &QComboBox::currentTextChanged, this,
-	                 &Debugger::updateRegMap);
-	QObject::connect(ui->sourceComboBox, &QComboBox::currentTextChanged, this,
-	                 &Debugger::updateRegMap);
-
+	QObject::connect(ui->DevicecomboBox, &QComboBox::currentTextChanged, this, &Debugger::updateRegMap);
+	QObject::connect(ui->sourceComboBox, &QComboBox::currentTextChanged, this, &Debugger::updateRegMap);
 
 	on_detailedRegMapCheckBox_stateChanged(0);
 }
 
-Debugger::~Debugger()
-{
-
-	delete ui;
-}
+Debugger::~Debugger() { delete ui; }
 
 void Debugger::updateChannelComboBox(QString devName)
 {
@@ -101,13 +88,12 @@ void Debugger::updateChannelComboBox(QString devName)
 	debug.scanChannels(devName);
 	channels = debug.getChannelList();
 
-	if (channels.isEmpty()) {
+	if(channels.isEmpty()) {
 		channels.append(QString("None"));
 	}
 
-	std::sort(channels.begin(), channels.end(), [](QString a, QString b) {
-		return Util::compareNatural(a.toStdString(), b.toStdString());
-	});
+	std::sort(channels.begin(), channels.end(),
+		  [](QString a, QString b) { return Util::compareNatural(a.toStdString(), b.toStdString()); });
 
 	ui->ChannelComboBox->addItems(channels);
 
@@ -125,7 +111,7 @@ void Debugger::updateAttributeComboBox(QString channel)
 	debug.scanChannelAttributes(ui->DevicecomboBox->currentText(), channel);
 	attributes = debug.getAttributeList();
 
-	if (attributes.isEmpty()) {
+	if(attributes.isEmpty()) {
 		attributes.append(QString("None"));
 	}
 
@@ -139,7 +125,7 @@ void Debugger::updateFilename(int index)
 {
 	QStringList filename = debug.getFileName();
 
-	if (!filename.isEmpty()) {
+	if(!filename.isEmpty()) {
 		ui->filenameLineEdit->setText(filename[index]);
 		//        ui->filenameLineEdit->setFixedWidth(700);
 	} else {
@@ -156,8 +142,8 @@ void Debugger::updateValueWidget(QString attribute)
 	QVector<QString> availableValues = debug.getAttributeVector();
 	ui->valueStackedWidget->setEnabled(true);
 
-	for (const QString &t : qAsConst(availableValues)) {
-		if (!QString::compare(t, attribute, Qt::CaseInsensitive)) {
+	for(const QString &t : qAsConst(availableValues)) {
+		if(!QString::compare(t, attribute, Qt::CaseInsensitive)) {
 			available = true;
 
 			/*read device, channel and get values to update widget*/
@@ -172,7 +158,7 @@ void Debugger::updateValueWidget(QString attribute)
 		}
 	}
 
-	if (!available) {
+	if(!available) {
 		ui->valueStackedWidget->setCurrentIndex(0);
 		ui->valueLineEdit->clear();
 	}
@@ -192,17 +178,15 @@ void Debugger::on_ReadButton_clicked()
 	channel = ui->ChannelComboBox->currentText();
 	attribute = ui->AttributeComboBox->currentText();
 
-
-
-	if (channel.contains("Global", Qt::CaseInsensitive)) {
+	if(channel.contains("Global", Qt::CaseInsensitive)) {
 		channel.clear();
 	}
 
-	if (!attribute.contains("None", Qt::CaseInsensitive)) {
-		if (!attribute.isNull()) {
+	if(!attribute.contains("None", Qt::CaseInsensitive)) {
+		if(!attribute.isNull()) {
 			value = debug.readAttribute(dev, channel, attribute);
 
-			if (ui->valueStackedWidget->currentIndex() == 0) {
+			if(ui->valueStackedWidget->currentIndex() == 0) {
 				ui->valueLineEdit->setText(value);
 			} else {
 				index = ui->valueComboBox->findText(value, Qt::MatchCaseSensitive);
@@ -225,17 +209,17 @@ void Debugger::on_WriteButton_clicked()
 	channel = ui->ChannelComboBox->currentText();
 	attribute = ui->AttributeComboBox->currentText();
 
-	if (channel.contains("Global", Qt::CaseInsensitive)) {
+	if(channel.contains("Global", Qt::CaseInsensitive)) {
 		channel.clear();
 	}
 
-	if (ui->valueStackedWidget->currentIndex() == 0) {
+	if(ui->valueStackedWidget->currentIndex() == 0) {
 		value = ui->valueLineEdit->text();
 	} else {
 		value = ui->valueComboBox->currentText();
 	}
 
-	if (!attribute.isNull()) {
+	if(!attribute.isNull()) {
 		debug.writeAttribute(dev, channel, attribute, value);
 	}
 }
@@ -250,8 +234,7 @@ void Debugger::updateSources()
 	ui->sourceComboBox->addItems(list);
 	ui->sourceComboBox->blockSignals(false);
 
-	Q_EMIT ui->sourceComboBox->currentTextChanged(
-	        ui->sourceComboBox->currentText());
+	Q_EMIT ui->sourceComboBox->currentTextChanged(ui->sourceComboBox->currentText());
 }
 
 void Debugger::updateRegMap()
@@ -260,24 +243,23 @@ void Debugger::updateRegMap()
 	QString source = ui->sourceComboBox->currentText();
 	int address = ui->addressSpinBox->value();
 
-	ui->addressSpinBox->blockSignals(true); //block signals from Address spinbox
+	ui->addressSpinBox->blockSignals(true); // block signals from Address spinbox
 
 	reg->createRegMap(&device, &address, &source);
 	ui->addressSpinBox->setValue(address);
 
-	if (!ui->sourceComboBox->currentText().isEmpty()) {
+	if(!ui->sourceComboBox->currentText().isEmpty()) {
 		ui->addressSpinBox->setMaximum(reg->getLastAddress());
 	}
 
-	if (ui->enableAutoReadCheckBox->isChecked()) {
+	if(ui->enableAutoReadCheckBox->isChecked()) {
 		on_readRegPushButton_clicked();
 	}
 
 	ui->descriptionLineEdit->setText(reg->getDescription());
-	ui->defaultValueLabel->setText(QString("0x%1").arg(reg->getDefaultValue(), 0,
-	                               16));
+	ui->defaultValueLabel->setText(QString("0x%1").arg(reg->getDefaultValue(), 0, 16));
 
-	ui->addressSpinBox->blockSignals(false); //activate signals from Address spinbox
+	ui->addressSpinBox->blockSignals(false); // activate signals from Address spinbox
 }
 
 void Debugger::on_readRegPushButton_clicked()
@@ -286,7 +268,7 @@ void Debugger::on_readRegPushButton_clicked()
 	uint32_t value = 0;
 
 	/*Read register*/
-	ui->addressSpinBox->blockSignals(true); //block signals from Address spinbox
+	ui->addressSpinBox->blockSignals(true); // block signals from Address spinbox
 	value = reg->readRegister(&device, ui->addressSpinBox->value());
 
 	ui->valueSpinBox->blockSignals(true);
@@ -294,7 +276,7 @@ void Debugger::on_readRegPushButton_clicked()
 	ui->valueSpinBox->blockSignals(false);
 
 	ui->valueHexLabel->setText(QString("0x%1").arg(value, 0, 16));
-	ui->addressSpinBox->blockSignals(false); //activate signals from Address spinbox
+	ui->addressSpinBox->blockSignals(false); // activate signals from Address spinbox
 }
 
 void Debugger::on_writeRegPushButton_clicked()
@@ -303,28 +285,22 @@ void Debugger::on_writeRegPushButton_clicked()
 	uint32_t address = ui->addressSpinBox->value();
 
 	reg->writeRegister(&device, address, ui->valueSpinBox->value());
-
 }
 
 void adiscope::Debugger::on_detailedRegMapCheckBox_stateChanged(int arg1)
 {
-	if (!arg1) {
+	if(!arg1) {
 		ui->widget->hide();
 	} else {
 		ui->widget->show();
 	}
 }
 
-void adiscope::Debugger::on_newWindowButton_clicked()
-{
-	Q_EMIT newDebuggerInstance();
-}
+void adiscope::Debugger::on_newWindowButton_clicked() { Q_EMIT newDebuggerInstance(); }
 
 void adiscope::Debugger::on_loadButton_clicked()
 {
-	QString fileName = QFileDialog::getOpenFileName(this, tr("Save File"),
-			   "/home",
-			   tr("JavaScript (*.js)"));
+	QString fileName = QFileDialog::getOpenFileName(this, tr("Save File"), "/home", tr("JavaScript (*.js)"));
 	scriptFile.setFileName(fileName);
 	ui->scriptLocation->setText(fileName);
 }
@@ -333,7 +309,7 @@ void adiscope::Debugger::on_runButton_clicked()
 {
 	QJSValue result;
 
-	if (!scriptFile.open(QIODevice::ReadOnly))
+	if(!scriptFile.open(QIODevice::ReadOnly))
 		qDebug() << "File not available";
 
 	QTextStream stream(&scriptFile);
@@ -348,12 +324,10 @@ void adiscope::Debugger::on_runButton_clicked()
 
 	result = eng->evaluate(contents, scriptFile.fileName());
 
-	if (result.isError()) {
-		qDebug()
-				<< "Uncaught exception at line"
-				<< result.property("lineNumber").toInt()
-				<< ":" << result.toString();
+	if(result.isError()) {
+		qDebug() << "Uncaught exception at line" << result.property("lineNumber").toInt() << ":"
+			 << result.toString();
 	} else {
-		qDebug()<<" - Success";
+		qDebug() << " - Success";
 	}
 }

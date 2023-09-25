@@ -1,10 +1,11 @@
 #ifndef REGISTERMAPTEMPLATE_HPP
 #define REGISTERMAPTEMPLATE_HPP
 
-#include <QObject>
 #include "scopy-regmapplugin_export.h"
 
-namespace scopy::regmap{
+#include <QObject>
+
+namespace scopy::regmap {
 class RegisterModel;
 class SCOPY_REGMAPPLUGIN_EXPORT RegisterMapTemplate : public QObject
 {
@@ -14,14 +15,13 @@ public:
 	~RegisterMapTemplate();
 
 	QMap<uint32_t, RegisterModel *> *getRegisterList() const;
-	RegisterModel* getRegisterTemplate(uint32_t address);
+	RegisterModel *getRegisterTemplate(uint32_t address);
 	void setRegisterList(QMap<uint32_t, RegisterModel *> *newRegisterList);
-	RegisterModel* getDefaultTemplate();
+	RegisterModel *getDefaultTemplate();
 
 private:
-	QMap<uint32_t, RegisterModel*> *registerList;
+	QMap<uint32_t, RegisterModel *> *registerList;
 Q_SIGNALS:
-
 };
-}
+} // namespace scopy::regmap
 #endif // REGISTERMAPTEMPLATE_HPP

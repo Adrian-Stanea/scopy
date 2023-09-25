@@ -1,4 +1,5 @@
 #include "iiodeviceimpl.h"
+
 #include "iioutil/contextprovider.h"
 
 using namespace scopy;
@@ -16,10 +17,9 @@ void IIODeviceImpl::init()
 bool IIODeviceImpl::verify()
 {
 	iio_context *ctx = ContextProvider::GetInstance()->open(m_param);
-	if (!ctx) {
+	if(!ctx) {
 		return false;
 	}
 	ContextProvider::GetInstance()->close(m_param);
 	return true;
 }
-

@@ -24,19 +24,17 @@
 
 namespace adiscope {
 
-class ToolLauncher_API: public ApiObject
+class ToolLauncher_API : public ApiObject
 {
 	Q_OBJECT
 
-	Q_PROPERTY(bool menu_opened READ menu_opened WRITE open_menu
-		   STORED false);
+	Q_PROPERTY(bool menu_opened READ menu_opened WRITE open_menu STORED false);
 
-	Q_PROPERTY(int focused_instrument READ focused_instrument WRITE focus_instrument );
+	Q_PROPERTY(int focused_instrument READ focused_instrument WRITE focus_instrument);
 
 	Q_PROPERTY(bool hidden READ hidden WRITE hide STORED false);
 
-	Q_PROPERTY(QString previous_ip READ getPreviousIp WRITE addIp
-		   SCRIPTABLE false);
+	Q_PROPERTY(QString previous_ip READ getPreviousIp WRITE addIp SCRIPTABLE false);
 
 	Q_PROPERTY(bool maximized READ maximized WRITE setMaximized);
 
@@ -51,7 +49,11 @@ class ToolLauncher_API: public ApiObject
 	Q_PROPERTY(bool manual_calibration READ manual_calibration_enabled WRITE enable_manual_calibration)
 
 public:
-	explicit ToolLauncher_API(ToolLauncher *tl) : ApiObject(), tl(tl) {}
+	explicit ToolLauncher_API(ToolLauncher *tl)
+		: ApiObject()
+		, tl(tl)
+	{
+	}
 	~ToolLauncher_API() {}
 
 	QString getIndexFile() const;
@@ -75,29 +77,20 @@ public:
 	bool manual_calibration_enabled() const;
 	void enable_manual_calibration(bool);
 
-	const QString& getPreviousIp()
-	{
-		return tl->previousIp;
-	}
-	void addIp(const QString& ip);
+	const QString &getPreviousIp() { return tl->previousIp; }
+	void addIp(const QString &ip);
 
-	bool maximized()
-	{
-		return tl->isMaximized();
-	}
+	bool maximized() { return tl->isMaximized(); }
 	void setMaximized(bool m)
 	{
-		if (m) {
+		if(m) {
 			tl->showMaximized();
 		} else {
 			tl->showNormal();
 		}
 	}
 
-	bool alwaysOnTop() const
-	{
-		return !!(tl->windowFlags() & Qt::WindowStaysOnTopHint);
-	}
+	bool alwaysOnTop() const { return !!(tl->windowFlags() & Qt::WindowStaysOnTopHint); }
 	void setAlwaysOnTop(bool on)
 	{
 		tl->setWindowFlag(Qt::WindowStaysOnTopHint, on);
@@ -105,11 +98,11 @@ public:
 	}
 
 	Q_INVOKABLE QList<QString> usb_uri_list();
-	Q_INVOKABLE bool connect(const QString& uri);
+	Q_INVOKABLE bool connect(const QString &uri);
 	Q_INVOKABLE void disconnect();
 
-	Q_INVOKABLE void load(const QString& file);
-	Q_INVOKABLE void save(const QString& file);
+	Q_INVOKABLE void load(const QString &file);
+	Q_INVOKABLE void save(const QString &file);
 	Q_INVOKABLE void save(QSettings *settings);
 	Q_INVOKABLE void sync();
 	Q_INVOKABLE bool reset();
@@ -119,5 +112,5 @@ public:
 private:
 	ToolLauncher *tl;
 };
-}
+} // namespace adiscope
 #endif // TOOL_LAUNCHER_API_HPP

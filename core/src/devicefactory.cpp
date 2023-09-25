@@ -1,8 +1,8 @@
 #include "devicefactory.h"
+
 #include "iiodeviceimpl.h"
 
 using namespace scopy;
-
 
 DeviceImpl *DeviceFactory::build(QString param, PluginManager *pm, QString category, QObject *parent)
 {

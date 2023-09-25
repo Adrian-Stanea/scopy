@@ -18,7 +18,6 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 #include "paintersaverestore.h"
 
 #include <QPainter>
@@ -26,14 +25,14 @@
 PainterSaveRestore::PainterSaveRestore(QPainter *painter)
 	: m_painter(painter)
 {
-	if (m_painter) {
+	if(m_painter) {
 		m_painter->save();
 	}
 }
 
 PainterSaveRestore::~PainterSaveRestore()
 {
-	if (m_painter) {
+	if(m_painter) {
 		m_painter->restore();
 	}
 }

@@ -1,5 +1,5 @@
 if(DEFINED __INCLUDED_SCOPY_WINDOWS_CMAKE)
-    return()
+	return()
 endif()
 set(__INCLUDED_SCOPY_WINDOWS_CMAKE TRUE)
 
@@ -12,12 +12,8 @@ macro(duplicate_target ORIGINAL NEW)
 	get_target_property(original_includes ${ORIGINAL} INCLUDE_DIRECTORIES)
 	get_target_property(original_options ${ORIGINAL} COMPILE_OPTIONS)
 
-	add_executable(${NEW}
-		WIN32
-		${PROJECT_SOURCES}
-		${SCOPY_RESOURCES}
-		${SCOPY_DEPENDENCIES}
-		${SCOPY_WIN32_RESOURCES}
+	add_executable(
+		${NEW} WIN32 ${PROJECT_SOURCES} ${SCOPY_RESOURCES} ${SCOPY_DEPENDENCIES} ${SCOPY_WIN32_RESOURCES}
 	)
 
 	target_link_libraries(${NEW} PRIVATE ${original_libraries})

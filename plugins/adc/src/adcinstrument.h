@@ -1,11 +1,13 @@
 #ifndef ADCINSTRUMENT_H
 #define ADCINSTRUMENT_H
 
-#include <QWidget>
-#include <adcplugin.h>
 #include "gui/tooltemplate.h"
-#include <gui/widgets/toolbuttons.h>
+
 #include <QPushButton>
+#include <QWidget>
+
+#include <adcplugin.h>
+#include <gui/widgets/toolbuttons.h>
 
 namespace scopy {
 class MenuControlButton;
@@ -39,19 +41,19 @@ private:
 	RunBtn *runBtn;
 	SingleShotBtn *singleBtn;
 	ToolTemplate *tool;
-	PlotProxy* proxy;
+	PlotProxy *proxy;
 	QPushButton *openLastMenuBtn;
 
 	MenuControlButton *channelsBtn;
 
-	MeasurementsPanel* measure_panel;
-	StatsPanel* stats_panel;
+	MeasurementsPanel *measure_panel;
+	StatsPanel *stats_panel;
 
-	GRTimePlotAddon* plotAddon;
-	GRTimePlotAddonSettings* plotAddonSettings;
+	GRTimePlotAddon *plotAddon;
+	GRTimePlotAddonSettings *plotAddonSettings;
 
 	MapStackedWidget *channelStack;
-	QButtonGroup* rightMenuBtnGrp;
+	QButtonGroup *rightMenuBtnGrp;
 	QButtonGroup *channelGroup;
 
 	void setupCursorButtonHelper(MenuControlButton *cursor);
@@ -68,5 +70,5 @@ private:
 	const QString statsMenuId = "stats";
 	const QString verticalChannelManagerId = "vcm";
 };
-}
+} // namespace scopy
 #endif // ADCINSTRUMENT_H

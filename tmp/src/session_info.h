@@ -40,16 +40,16 @@ public:
 	// write functions had to be written for all the properties
 	// otherwise none of them would've been saved
 	QString getOperatingSystem() const;
-	void setOperatingSystem(const QString& /*os*/) {}
+	void setOperatingSystem(const QString & /*os*/) {}
 
 	QString getGitTag() const;
-	void setGitTag(const QString& /*tag*/) {}
+	void setGitTag(const QString & /*tag*/) {}
 
 	QString getLastConnectedFirmware() const;
-	void setLastConnectedFirmware(const QString& firmware);
+	void setLastConnectedFirmware(const QString &firmware);
 
 	QString getLastConnectedSerialNumber() const;
-	void setLastConnectedSerialNumber(const QString& serial);
+	void setLastConnectedSerialNumber(const QString &serial);
 
 private:
 	QString m_lastConnectedFirmware;

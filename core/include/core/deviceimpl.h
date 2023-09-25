@@ -1,22 +1,22 @@
 #ifndef DEVICEIMPL_H
 #define DEVICEIMPL_H
 
-#include "pluginbase/plugin.h"
-#include <QObject>
 #include "device.h"
-#include <QPushButton>
-#include <QCheckBox>
-#include "scopy-core_export.h"
+#include "pluginbase/plugin.h"
 #include "pluginmanager.h"
+#include "scopy-core_export.h"
+
+#include <QCheckBox>
+#include <QObject>
+#include <QPushButton>
 
 namespace scopy {
-
 
 class SCOPY_CORE_EXPORT DeviceImpl : public QObject, public Device
 {
 	Q_OBJECT
 public:
-	explicit DeviceImpl(QString param, PluginManager *p, QString category = "",QObject *parent = nullptr);
+	explicit DeviceImpl(QString param, PluginManager *p, QString category = "", QObject *parent = nullptr);
 	virtual ~DeviceImpl();
 
 	// Device interface
@@ -28,14 +28,13 @@ public:
 	QString param() override;
 	QWidget *icon() override;
 	QWidget *page() override;
-	QList<ToolMenuEntry*> toolList() override;
+	QList<ToolMenuEntry *> toolList() override;
 	virtual void init() override;
 	virtual void preload() override;
 	virtual void loadPlugins() override;
 	virtual void unloadPlugins() override;
 
 	QList<Plugin *> plugins() const;
-
 
 public Q_SLOTS:
 	virtual void connectDev() override;
@@ -44,7 +43,7 @@ public Q_SLOTS:
 	virtual void hidePage() override;
 	virtual void save(QSettings &) override;
 	virtual void load(QSettings &) override;
-//	void forgetDev() override;
+	//	void forgetDev() override;
 	void onConnectionFailed();
 Q_SIGNALS:
 	void toolListChanged() override;
@@ -54,6 +53,7 @@ Q_SIGNALS:
 	void requestTool(QString) override;
 	void connectionFailed();
 	void forget();
+
 protected:
 	void removeDisabledPlugins();
 	void loadName();
@@ -64,8 +64,8 @@ protected:
 
 protected:
 	PluginManager *p;
-	QList<Plugin*> m_plugins;
-	QList<Plugin*> m_connectedPlugins;
+	QList<Plugin *> m_plugins;
+	QList<Plugin *> m_connectedPlugins;
 	QString m_id;
 	QString m_category;
 	QString m_displayName;
@@ -74,8 +74,7 @@ protected:
 	QWidget *m_icon;
 	QWidget *m_page;
 	QPushButton *connbtn, *discbtn;
-
 };
-}
+} // namespace scopy
 
 #endif // DEVICEIMPL_H

@@ -1,21 +1,24 @@
 #ifndef PLOT_H
 #define PLOT_H
-#include <QwtPlot>
-#include "plotchannel.h"
-#include <QWidget>
-#include <graticule.h>
-#include "scopy-gui_export.h"
-#include <symbol_controller.h>
 #include "handles_area.hpp"
+#include "plotchannel.h"
+#include "scopy-gui_export.h"
+
 #include <QGridLayout>
+#include <QWidget>
+#include <QwtPlot>
 #include <QwtPlotZoomer>
+
 #include <buffer_previewer.hpp>
+#include <graticule.h>
+#include <symbol_controller.h>
 
 namespace scopy {
 class PlotAxis;
 class PlotAxisHandle;
 
-class SCOPY_GUI_EXPORT PlotWidget : public QWidget {
+class SCOPY_GUI_EXPORT PlotWidget : public QWidget
+{
 	Q_OBJECT
 public:
 	PlotWidget(QWidget *parent = nullptr);
@@ -25,7 +28,7 @@ public:
 	void removePlotChannel(PlotChannel *ch);
 
 	QList<PlotAxis *> &plotAxis(int position);
-	PlotAxis* xAxis();
+	PlotAxis *xAxis();
 	PlotAxis *yAxis();
 
 	void addPlotAxis(PlotAxis *ax);
@@ -57,9 +60,9 @@ public:
 	void addBufferPreviewerSlot(QWidget *w);
 public Q_SLOTS:
 	void replot();
-	void selectChannel(PlotChannel*);	
+	void selectChannel(PlotChannel *);
 	void showAxisLabels();
-	void hideAxisLabels();	
+	void hideAxisLabels();
 
 Q_SIGNALS:
 	void canvasSizeChanged();
@@ -68,18 +71,16 @@ Q_SIGNALS:
 	void mouseButtonRelease(const QMouseEvent *event);
 	void mouseMove(const QMouseEvent *event);
 
-
 private:
-
 	QwtPlot *m_plot;
 	QwtPlotZoomer *m_zoomer;
 	QGridLayout *m_layout;
 
-	QList<PlotChannel*> m_plotChannels;
-	QList<QwtPlotScaleItem*> m_scaleItems;
+	QList<PlotChannel *> m_plotChannels;
+	QList<QwtPlotScaleItem *> m_scaleItems;
 
-	QList<PlotAxis*> m_plotAxis[QwtAxis::AxisPositions];
-	QList<PlotAxisHandle*> m_plotAxisHandles[QwtAxis::AxisPositions];
+	QList<PlotAxis *> m_plotAxis[QwtAxis::AxisPositions];
+	QList<PlotAxisHandle *> m_plotAxisHandles[QwtAxis::AxisPositions];
 
 	PlotAxis *m_xAxis;
 	PlotAxis *m_yAxis;
@@ -94,7 +95,7 @@ private:
 	bool m_showYAxisLabels;
 
 	SymbolController *m_symbolCtrl;
-	PlotChannel* m_selectedChannel;
+	PlotChannel *m_selectedChannel;
 
 	/* Adjacent areas */
 	HorizHandlesArea *m_bottomHandlesArea;
@@ -112,7 +113,6 @@ private:
 	void hideDefaultAxis();
 };
 
-
-}
+} // namespace scopy
 
 #endif // PLOT_H

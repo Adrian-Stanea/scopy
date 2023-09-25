@@ -1,15 +1,17 @@
 #ifndef SCOPYHOMEADDPAGE_H
 #define SCOPYHOMEADDPAGE_H
 
-#include <QWidget>
 #include "deviceimpl.h"
+#include "emuwidget.h"
 #include "infopage.h"
 #include "pluginenablewidget.h"
 #include "pluginmanager.h"
 #include "scopy-core_export.h"
-#include <QFuture>
-#include "emuwidget.h"
+
 #include <iio.h>
+
+#include <QFuture>
+#include <QWidget>
 
 namespace Ui {
 class ScopyHomeAddPage;
@@ -68,9 +70,10 @@ private:
 	InfoPage *deviceInfoPage;
 	PluginManager *pluginManager;
 	DeviceImpl *deviceImpl;
-	QList<PluginEnableWidget*> pluginDescriptionList;
+	QList<PluginEnableWidget *> pluginDescriptionList;
 
-	const QVector<unsigned int> availableBaudRates = {2400, 4800, 9600, 14400, 19200, 38400, 57600, 115200, 230400, 460800, 921600};
+	const QVector<unsigned int> availableBaudRates = {2400,	 4800,	 9600,	 14400,	 19200, 38400,
+							  57600, 115200, 230400, 460800, 921600};
 };
-}
+} // namespace scopy
 #endif // SCOPYHOMEADDPAGE_H

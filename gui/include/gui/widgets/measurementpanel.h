@@ -1,11 +1,12 @@
 #ifndef MEASUREMENTPANEL_H
 #define MEASUREMENTPANEL_H
 
-#include <QWidget>
-#include <QScrollBar>
 #include "scopy-gui_export.h"
 #include "utils.h"
+
 #include <QGridLayout>
+#include <QScrollBar>
+#include <QWidget>
 
 namespace Ui {
 class MeasurementsPanel;
@@ -13,12 +14,14 @@ class MeasurementsPanel;
 
 namespace scopy {
 
-class VerticalWidgetStack : public QWidget {
+class VerticalWidgetStack : public QWidget
+{
 	Q_OBJECT
 public:
-	VerticalWidgetStack(QWidget *parent = nullptr) {
+	VerticalWidgetStack(QWidget *parent = nullptr)
+	{
 		lay = new QVBoxLayout(this);
-		setSizePolicy(QSizePolicy::Maximum,QSizePolicy::Expanding);
+		setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Expanding);
 		setLayout(lay);
 		lay->setMargin(0);
 		lay->setSpacing(6);
@@ -26,37 +29,32 @@ public:
 		lay->addSpacerItem(spacer);
 		stackSize = 4;
 	}
-	~VerticalWidgetStack() {
-
-	}
-	void addWidget(QWidget *w) {
+	~VerticalWidgetStack() {}
+	void addWidget(QWidget *w)
+	{
 		int idx = lay->indexOf(spacer);
-		lay->insertWidget(idx,w,Qt::AlignTop | Qt::AlignLeft);
+		lay->insertWidget(idx, w, Qt::AlignTop | Qt::AlignLeft);
 		m_widgets.append(w);
 	}
 
-	void setStackSize(int val) {
-		stackSize = val;
-	}
+	void setStackSize(int val) { stackSize = val; }
 
-	void reparentWidgets(QWidget *parent = nullptr) {
+	void reparentWidgets(QWidget *parent = nullptr)
+	{
 		for(QWidget *w : m_widgets) {
 			lay->removeWidget(w);
 			w->setParent(parent);
-
 		}
 		m_widgets.clear();
 	}
 
-	bool full() {
-		return(lay->count() > stackSize);
-	}
+	bool full() { return (lay->count() > stackSize); }
 
 private:
 	QVBoxLayout *lay;
 	QSpacerItem *spacer;
 	int stackSize;
-	QList<QWidget*> m_widgets;
+	QList<QWidget *> m_widgets;
 };
 
 class SCOPY_GUI_EXPORT MeasurementsPanel : public QWidget
@@ -74,8 +72,8 @@ public Q_SLOTS:
 
 private:
 	QHBoxLayout *panelLayout;
-	QList<QWidget*> m_labels;
-	QList<VerticalWidgetStack*> m_stacks;
+	QList<QWidget *> m_labels;
+	QList<VerticalWidgetStack *> m_stacks;
 	QWidget *m_cursor;
 	QSpacerItem *spacer;
 	void addWidget(QWidget *meas);
@@ -93,11 +91,10 @@ public Q_SLOTS:
 	void removeStat(QWidget *stat);
 	void clear();
 	void sort();
+
 private:
 	QHBoxLayout *panelLayout;
-	QList<QWidget*> m_labels;
-
-
+	QList<QWidget *> m_labels;
 };
-}
+} // namespace scopy
 #endif // MEASUREMENTPANEL_H

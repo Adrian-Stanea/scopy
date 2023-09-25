@@ -21,11 +21,13 @@
 #define MEASUREMENT_GUI_H
 
 #include "plot_utils.hpp"
-#include <QString>
-#include <QWidget>
+
+#include <QColor>
 #include <QHBoxLayout>
 #include <QLabel>
-#include <QColor>
+#include <QString>
+#include <QWidget>
+
 #include <cmath>
 #include <stylehelper.h>
 
@@ -33,20 +35,21 @@ namespace scopy {
 
 class MeasurementData;
 
-class SCOPY_GUI_EXPORT MeasurementLabel : public QWidget {
+class SCOPY_GUI_EXPORT MeasurementLabel : public QWidget
+{
 	friend class scopy::StyleHelper;
 	Q_OBJECT;
+
 public:
 	MeasurementLabel(QWidget *parent = nullptr);
 	~MeasurementLabel();
-
 
 	void setName(QString str);
 	void setUnit(QString str);
 	void setPrecision(int val);
 	void setColor(QColor color);
 	void setValue(double val);
-	void setMeasurementValueFormatter(PrefixFormatter* f);
+	void setMeasurementValueFormatter(PrefixFormatter *f);
 
 	QString name() const;
 
@@ -57,11 +60,11 @@ private:
 	int m_precision;
 	QLabel *m_nameLabel;
 	QLabel *m_valueLabel;
-	PrefixFormatter * m_formatter;
+	PrefixFormatter *m_formatter;
 };
 
-
-class SCOPY_GUI_EXPORT StatsLabel : public QWidget {
+class SCOPY_GUI_EXPORT StatsLabel : public QWidget
+{
 	friend class scopy::StyleHelper;
 	Q_OBJECT;
 	QWIDGET_PAINT_EVENT_HELPER
@@ -69,13 +72,12 @@ public:
 	StatsLabel(QWidget *parent = nullptr);
 	~StatsLabel();
 
-
 	void setName(QString str);
 	void setUnit(QString str);
 	void setPrecision(int val);
 	void setColor(QColor color);
 	void setValue(double avg, double min, double max);
-	void setMeasurementValueFormatter(PrefixFormatter* f);
+	void setMeasurementValueFormatter(PrefixFormatter *f);
 
 	QString name() const;
 
@@ -88,7 +90,7 @@ private:
 	QLabel *m_avgLabel;
 	QLabel *m_minLabel;
 	QLabel *m_maxLabel;
-	PrefixFormatter * m_formatter;
+	PrefixFormatter *m_formatter;
 };
 
 } // namespace scopy

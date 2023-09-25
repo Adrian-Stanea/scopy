@@ -1,24 +1,26 @@
 #ifndef SCOPYMAINWINDOW_H
 #define SCOPYMAINWINDOW_H
 
-#include <QMainWindow>
-
-#include "license_overlay.h"
-#include "scopyhomepage.h"
-#include "devicemanager.h"
-#include "scannediiocontextcollector.h"
-#include "toolmanager.h"
 #include "detachedtoolwindowmanager.h"
-#include "pluginrepository.h"
-#include "scopy-core_export.h"
-#include "scopyaboutpage.h"
-#include "scopypreferencespage.h"
-#include "pluginbase/preferences.h"
+#include "devicemanager.h"
 #include "iioutil/cyclicaltask.h"
 #include "iioutil/iioscantask.h"
+#include "license_overlay.h"
+#include "pluginbase/preferences.h"
+#include "pluginrepository.h"
+#include "scannediiocontextcollector.h"
+#include "scopy-core_export.h"
+#include "scopyaboutpage.h"
+#include "scopyhomepage.h"
+#include "scopypreferencespage.h"
+#include "toolmanager.h"
+
+#include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class ScopyMainWindow; }
+namespace Ui {
+class ScopyMainWindow;
+}
 QT_END_NAMESPACE
 namespace scopy {
 class ScopyMainWindow_API;
@@ -47,8 +49,8 @@ public Q_SLOTS:
 	void handlePreferences(QString, QVariant);
 
 private:
-	ScopyAboutPage* about;
-	ScopyPreferencesPage* prefPage;
+	ScopyAboutPage *about;
+	ScopyPreferencesPage *prefPage;
 	PluginRepository *pr;
 	ScopyHomePage *hp;
 	DeviceManager *dm;
@@ -68,8 +70,9 @@ private:
 	void initPythonWIN32();
 	void loadDecoders();
 	void initApi();
+
 protected:
 	void closeEvent(QCloseEvent *event) override;
 };
-}
+} // namespace scopy
 #endif // SCOPYMAINWINDOW_H

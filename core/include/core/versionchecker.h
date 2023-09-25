@@ -1,10 +1,11 @@
 #ifndef VERSIONCHECKER_H
 #define VERSIONCHECKER_H
 
-#include <QObject>
+#include "scopy-core_export.h"
+
 #include <QJsonDocument>
 #include <QNetworkAccessManager>
-#include "scopy-core_export.h"
+#include <QObject>
 
 namespace scopy {
 class SCOPY_CORE_EXPORT VersionCache : public QObject
@@ -27,15 +28,15 @@ public:
 	void read();
 Q_SIGNALS:
 	void cacheUpdated();
+
 private:
-	static VersionCache * pinstance_;
+	static VersionCache *pinstance_;
 	const QString url = "http://swdownloads.analog.com/cse/sw_versions.json";
 
 	QJsonDocument m_cache;
 	QString m_cacheFilePath;
 	QNetworkAccessManager *m_nam;
 	bool m_cacheOutdated;
-
 };
-}
+} // namespace scopy
 #endif // VERSIONCHECKER_H

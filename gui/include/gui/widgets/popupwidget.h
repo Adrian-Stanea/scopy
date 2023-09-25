@@ -18,20 +18,23 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-
 #ifndef SCOPY_POPUPWIDGET_H
 #define SCOPY_POPUPWIDGET_H
 
-#include <QWidget>
 #include "scopy-gui_export.h"
 
-namespace Ui { class PopupWidget; }
+#include <QWidget>
+
+namespace Ui {
+class PopupWidget;
+}
 
 namespace scopy {
-class SCOPY_GUI_EXPORT PopupWidget : public QWidget {
+class SCOPY_GUI_EXPORT PopupWidget : public QWidget
+{
 	Q_OBJECT
 public:
-	explicit PopupWidget(QWidget* parent = nullptr);
+	explicit PopupWidget(QWidget *parent = nullptr);
 	~PopupWidget();
 
 	void setFocusOnContinueButton();
@@ -40,16 +43,16 @@ public:
 	void enableTitleBar(bool enable = true);
 
 	QString getDescription();
-	void setDescription(const QString& description);
+	void setDescription(const QString &description);
 
 	QString getTitle();
-	void setTitle(const QString& title);
+	void setTitle(const QString &title);
 
 	QString getContinueButtonText();
-	void setContinueButtonText(const QString& text);
+	void setContinueButtonText(const QString &text);
 
 	QString getExitButtonText();
-	void setExitButtonText(const QString& text);
+	void setExitButtonText(const QString &text);
 
 Q_SIGNALS:
 	void continueButtonClicked();
@@ -58,6 +61,6 @@ Q_SIGNALS:
 protected:
 	Ui::PopupWidget *ui;
 };
-}
+} // namespace scopy
 
-#endif //SCOPY_POPUPWIDGET_H
+#endif // SCOPY_POPUPWIDGET_H

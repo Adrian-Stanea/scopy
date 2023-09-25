@@ -18,15 +18,15 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 #ifndef PHONEHOME_H
 #define PHONEHOME_H
 #include "preferences.h"
+
+#include <QJsonDocument>
+#include <QJsonObject>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QTextCodec>
-#include <QJsonDocument>
-#include <QJsonObject>
 
 namespace adiscope {
 class PhoneHome : public ApiObject
@@ -40,18 +40,17 @@ private:
 	QString m_m2kLink;
 	qint64 m_timestamp;
 	QString m_versionsJson;
-	QNetworkAccessManager* manager;
-	PhoneHome* instance;
-	Preferences* preferences;
+	QNetworkAccessManager *manager;
+	PhoneHome *instance;
+	Preferences *preferences;
 	QSettings *settings;
 	bool done;
-
 
 	Q_PROPERTY(QString timestamp READ getTimestamp WRITE setTimestamp)
 	Q_PROPERTY(QString versionsJson READ getVersionsJson WRITE setVersionsJson)
 
 public:
-	PhoneHome(QSettings *settings, Preferences *preferences, QNetworkAccessManager* manager);
+	PhoneHome(QSettings *settings, Preferences *preferences, QNetworkAccessManager *manager);
 	~PhoneHome();
 	void versionsRequest(bool force = false);
 	void extractVersionStringsFromJson(const QJsonDocument &doc);
@@ -59,7 +58,7 @@ public:
 	QString getM2kVersion() { return m_m2kVersion; }
 	QString getScopyLink() { return m_scopyLink; }
 	QString getM2kLink() { return m_m2kLink; }
-	void setPreferences(Preferences* preferences);
+	void setPreferences(Preferences *preferences);
 	QString getTimestamp() const;
 	void setTimestamp(QString);
 	QString getVersionsJson() const;
@@ -73,7 +72,7 @@ Q_SIGNALS:
 	void checkUpdatesFinished(qint64);
 
 public Q_SLOTS:
-	void onVersionsRequestFinished(QNetworkReply*);
+	void onVersionsRequestFinished(QNetworkReply *);
 };
-}
+} // namespace adiscope
 #endif // PHONEHOME_H

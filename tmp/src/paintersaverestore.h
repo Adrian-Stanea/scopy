@@ -18,16 +18,15 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 #ifndef PAINTERSAVERESTORE_H
 #define PAINTERSAVERESTORE_H
 
-#include <QtGlobal>
 #include <QPainter>
+#include <QtGlobal>
 
 /*
-* RAII class for saving and restoring a QPainter
-*/
+ * RAII class for saving and restoring a QPainter
+ */
 class PainterSaveRestore
 {
 public:

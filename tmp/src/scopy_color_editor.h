@@ -21,15 +21,14 @@
 #ifndef SCOPY_COLOR_EDITOR_H
 #define SCOPY_COLOR_EDITOR_H
 
-#include <QWidget>
 #include <QPushButton>
-#include <QTextEdit>
-#include <QScrollArea>
-
-#include <QSyntaxHighlighter>
 #include <QRegularExpression>
-#include <QTextDocument>
+#include <QScrollArea>
 #include <QString>
+#include <QSyntaxHighlighter>
+#include <QTextDocument>
+#include <QTextEdit>
+#include <QWidget>
 
 namespace Ui {
 class ScopyColorEditor;
@@ -69,10 +68,8 @@ public:
 
 private:
 	void buildMenuForMap();
-	bool handleRgbaColor(const QString &key, const QString &line, int index,
-			     QPushButton *btn);
-	bool handleHexColor(const QString &key, const QString &line, int index,
-			     QPushButton *btn);
+	bool handleRgbaColor(const QString &key, const QString &line, int index, QPushButton *btn);
+	bool handleHexColor(const QString &key, const QString &line, int index, QPushButton *btn);
 
 	void rebuildAndApplyStylesheet();
 
@@ -81,7 +78,7 @@ private:
 	void parseAndBuildMap(QString toParse);
 	void writeNewStylesheetToFile(QString stylesheet);
 
-private	Q_SLOTS:
+private Q_SLOTS:
 	void changeColor();
 	void copy();
 	void remove();

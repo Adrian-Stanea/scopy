@@ -28,11 +28,11 @@
 
 /* Local includes */
 #include "debug.h"
-#include "gui/bitfieldwidget.h"
-#include "gui/registerwidget.h"
 #include "filter.hpp"
-#include "tool.hpp"
+#include "gui/bitfieldwidget.h"
 #include "gui/detachedWindow.hpp"
+#include "gui/registerwidget.h"
+#include "tool.hpp"
 #include "tool_launcher.hpp"
 
 class QJSEngine;
@@ -43,15 +43,13 @@ class Debugger;
 
 namespace adiscope {
 
-
 class Debugger : public Tool
 {
 	Q_OBJECT
 
 public:
-	explicit Debugger(struct iio_context *ctx, Filter *filt,
-			  ToolMenuItem *toolMenuItem, QJSEngine *engine,
-	                  ToolLauncher *parent = 0);
+	explicit Debugger(struct iio_context *ctx, Filter *filt, ToolMenuItem *toolMenuItem, QJSEngine *engine,
+			  ToolLauncher *parent = 0);
 	~Debugger();
 
 Q_SIGNALS:
@@ -70,7 +68,6 @@ public Q_SLOTS:
 
 	void on_readRegPushButton_clicked();
 	void on_writeRegPushButton_clicked();
-
 
 private Q_SLOTS:
 	void on_detailedRegMapCheckBox_stateChanged(int arg1);
@@ -93,6 +90,6 @@ private:
 	RegisterWidget *reg;
 	QVector<BitfieldWidget *> bitfieldsVector;
 };
-}
+} // namespace adiscope
 
 #endif // DEBUGGER_H

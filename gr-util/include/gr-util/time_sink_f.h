@@ -46,13 +46,16 @@
 #include <Python.h>
 #endif
 
-#include <gnuradio/sync_block.h>
 #include "scopy-gr-util_export.h"
+
+#include <gnuradio/sync_block.h>
+
 #include <QString>
 
 namespace scopy {
 
-typedef struct  {
+typedef struct
+{
 	QString str;
 	int offset;
 } PlotTag_t;
@@ -63,19 +66,17 @@ public:
 	// scopy::time_sink_f::sptr
 	typedef std::shared_ptr<time_sink_f> sptr;
 
-	static sptr make(int size, float sampleRate, const std::string &name,
-			 int nconnections );
+	static sptr make(int size, float sampleRate, const std::string &name, int nconnections);
 	virtual std::string name() const = 0;
 	virtual void updateData() = 0;
 	virtual const std::vector<float> &time() const = 0;
-	virtual const std::vector<std::vector<float> > &data() const = 0;
-	virtual const std::vector<std::vector<PlotTag_t> > &tags() const = 0;
+	virtual const std::vector<std::vector<float>> &data() const = 0;
+	virtual const std::vector<std::vector<PlotTag_t>> &tags() const = 0;
 	virtual void setRollingMode(bool) = 0;
 	virtual bool rollingMode() = 0;
 	virtual void setSingleShot(bool) = 0;
 	virtual bool singleShot() = 0;
 	virtual bool finishedAcquisition() = 0;
-
 };
 
 } /* namespace scopy */

@@ -21,15 +21,14 @@
 #ifndef BITFIELD_H
 #define BITFIELD_H
 
-#include <QWidget>
 #include <QDomDocument>
+#include <QWidget>
 
 #include <math.h>
 
 namespace Ui {
 class BitfieldWidget;
 }
-
 
 namespace adiscope {
 
@@ -42,7 +41,7 @@ public:
 	explicit BitfieldWidget(QWidget *parent, int bitNumber);
 
 	~BitfieldWidget();
-	void updateValue(uint32_t& value);
+	void updateValue(uint32_t &value);
 	int getRegOffset(void) const;
 	int getSliceWidth(void) const;
 	uint32_t getDefaultValue(void) const;
@@ -72,7 +71,6 @@ private:
 	QString notes;
 	QString name, access;
 	QString option;
-
 };
-}
+} // namespace adiscope
 #endif // BITFIELD_H

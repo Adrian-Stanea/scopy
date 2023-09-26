@@ -1,5 +1,10 @@
 #include "pluginrepository.h"
 
+#ifdef Q_OS_WINDOWS
+#include <windows.h>
+#include <Winbase.h>
+#endif
+
 #include <QApplication>
 #include <QDir>
 #include <QDirIterator>
@@ -7,10 +12,6 @@
 #include <QLibrary>
 #include <QLoggingCategory>
 #include <QtGlobal>
-#ifdef Q_OS_WINDOWS
-#include <Winbase.h>
-#include <windows.h>
-#endif
 
 Q_LOGGING_CATEGORY(CAT_PLUGINREPOSTIORY, "PluginRepository");
 

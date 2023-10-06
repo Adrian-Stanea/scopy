@@ -16,8 +16,10 @@ class SCOPY_TESTPLUGIN_EXPORT TestTool : public QWidget
 public:
 	TestTool(QWidget *parent = nullptr);
 	void initData();
+	void crashed(bool crash);
 public Q_SLOTS:
 	void acquireData();
+	void crashSlot(bool toggled);
 private:
 	int testDataSize = 128;
 	double amplitude = 0.5;

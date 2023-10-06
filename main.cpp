@@ -6,6 +6,7 @@
 #include <core/cmdlinehandler.h>
 #include <core/scopymainwindow_api.h>
 #include <gui/utils.h>
+#include "crashreport.h"
 
 using namespace scopy;
 
@@ -33,7 +34,6 @@ void SetScopyQDebugMessagePattern()
 		#ifdef QDEBUG_LOG_FILE
 		QDEBUG_LOG_FILE_STR
 		#endif
-
 		" - "
 		"%{message}"
 		);
@@ -91,11 +91,11 @@ int main(int argc, char *argv[])
 				  { {"c", "connect"}, "Establish the connection to a given device by URI.","URI"},
 				  { {"t", "tool"}, "Select the desired tool for the device.", "tool"} ,
 			  });
-
 	parser.process(a);
 	CmdLineHandler::withLogFileOption(parser);
 
 	printRuntimeEnvironmentInfo();
+	initSignalHandler(argv[0]);
 	ApplicationRestarter restarter(QString::fromLocal8Bit(argv[0]));
 	a.setWindowIcon(QIcon(":/gui/icon.ico"));
 	a.setStyle("Fusion");

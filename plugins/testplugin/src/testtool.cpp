@@ -24,7 +24,7 @@
 #include <gui/widgets/menulineedit.h>
 #include <gui/widgets/verticalchannelmanager.h>
 #include <gui/widgets/hoverwidget.h>
-
+//#include <QtConcurrent>
 using namespace scopy;
 
 QMap<QString, QColor> colorMap;
@@ -203,6 +203,12 @@ TestTool::TestTool(QWidget *parent)
 	plotCursorReadouts->setFixedSize(200,80);
 	plotCursorReadouts->move(100,100);
 
+	MenuControlButton *crash = new MenuControlButton(this);
+	crash->setName("Crash");
+	tool->addWidgetToBottomContainerHelper(crash, TTA_RIGHT);
+
+	connect(crash,&QAbstractButton::toggled,this,&TestTool::crashSlot);
+
 	connect(cursor,&QAbstractButton::toggled, plotCursorReadouts, &PlotCursorReadouts::setVisible);
 	connect(cursor,&QAbstractButton::toggled, plotCursors, &PlotCursors::setVisible);
 
@@ -219,6 +225,19 @@ TestTool::TestTool(QWidget *parent)
 	});
 }
 
+void TestTool::crashed(bool crash)
+{
+	if (crash) {
+		delete reinterpret_cast<QString*>(0xFEE1DEAD);
+//		::raise(SIGILL);
+	}
+}
+
+void TestTool::crashSlot(bool toggled)
+{
+//	QtConcurrent::run(std::bind(&TestTool::crashed, this, true));
+	crashed(true);
+}
 
 QWidget* TestTool::createMenu(QWidget* parent) {
 	QWidget *w = new QWidget(parent);
@@ -280,7 +299,6 @@ QWidget* TestTool::createMenu(QWidget* parent) {
 	StyleHelper::BlueButton(btn,"TestBtn");
 	vdiv->contentLayout()->addWidget(btn);
 	vdiv->contentLayout()->setSpacing(4);
-
 
 	return w;
 }

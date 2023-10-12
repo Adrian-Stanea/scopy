@@ -2139,15 +2139,13 @@ uint8_t SPIPattern::generate_pattern(uint32_t sample_rate,
 	auto frameBytesLeft = bytesPerFrame;
 	bool start_new_frame = 1;
 
-	// https://upload.wikimedia.org/wikipedia/commons/f/f0/SPI_timing_diagram_CS.svg
 	for (std::deque<uint8_t>::iterator it = v.begin(); it != v.end();
 	     ++it) {
 		uint8_t val = *it;
 		bool oldbit = 0;
-		bool bit;
+        bool bit;
 
 		for (auto j=0; j<8; j++) {
-
 			if (msbFirst) {
 				bit = (val & 0x80) >> 7;
 				val = val << 1;
@@ -2156,11 +2154,15 @@ uint8_t SPIPattern::generate_pattern(uint32_t sample_rate,
 				val = val >> 1;
 			}
 
+            if(!CPHA) { //overwrite the value
+                oldbit = bit;
+            }
+
 			for (auto i=0; i<samples_per_bit/2 && buf_ptr < buf_ptr_end; i++,buf_ptr++) {
 				// first half of clock and bit period
 				*buf_ptr = changeBit(*buf_ptr,csBit,CSPOL);
 				*buf_ptr = changeBit(*buf_ptr,clkActiveBit,CPOL);
-				*buf_ptr = changeBit(*buf_ptr,outputBit,oldbit);
+                *buf_ptr = changeBit(*buf_ptr,outputBit,oldbit);
 			}
 
 			for (auto i=samples_per_bit/2; i<samples_per_bit && buf_ptr < buf_ptr_end; i++,buf_ptr++) {
@@ -2175,7 +2177,7 @@ uint8_t SPIPattern::generate_pattern(uint32_t sample_rate,
 
 		frameBytesLeft--;
 
-		if (frameBytesLeft == 0) {
+        if (frameBytesLeft == 0) {
 			for (auto i=samples_per_bit/2; i<samples_per_bit && buf_ptr < buf_ptr_end; i++,buf_ptr++) {
 				*buf_ptr = changeBit(*buf_ptr,csBit,CSPOL);
 				*buf_ptr = changeBit(*buf_ptr,clkActiveBit,CPOL);
